@@ -17,12 +17,12 @@ body {
     color: $color_tuatara;
     //background-color: $bodycolor;
 		
-    background-position: center center;
-    background-attachment: fixed;
-    @media #{$small} {
-        background-image: none !important;
-        background: $white;
-    }
+    background-position: center center !important;
+    background-attachment: fixed !important;
+    // @media #{$small} {
+    //     background-image: none !important;
+    //     background: $white;
+    // }
 }
 * {
     box-sizing: border-box;
@@ -68,6 +68,9 @@ body {
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
+    background-attachment: fixed;
+    transform: translateZ(0);
+    will-change: transform; 
 }
 .container {
     width: 100%;

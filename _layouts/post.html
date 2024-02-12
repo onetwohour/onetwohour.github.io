@@ -14,6 +14,7 @@ layout: compress
         :root {
             --gradient-x: 50%; 
             --gradient-y: 50%; 
+            --isMobile: 1;
         }
 
         .button-container {
@@ -29,6 +30,7 @@ layout: compress
             position: relative;
             overflow: hidden;
             width: max-content;
+            z-index: 9999; 
         }
 
         .button-container.dark-mode {
@@ -50,18 +52,39 @@ layout: compress
             transform: translate(-50%, -50%) scale(0);
         }
 
-        .button-container:hover::before {
-            transform: translate(-50%, -50%) scale(1);
+        .button-container:hover { transform: none; }
+
+        /* 모바일이 아닌 경우 */
+        @media (hover: hover) {
+            .button-container:not([style*="--isMobile\\:1"]):hover::before {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            
+            .button-container:not([style*="--isMobile\\:1"]):hover {
+                transform: scale(1.2);
+                border-color: transparent;
+                border-width: 2px;
+                background-color: #0d55c0c5;
+            }
+            
+            .button-container:not([style*="--isMobile\\:1"]):hover.dark-mode {
+                background-color: #1c77ffc5;
+            }
         }
 
-        .button-container:hover {
+        /* 모바일인 경우 */
+        .button-container:not([style*="--isMobile\\:0"]).hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .button-container:not([style*="--isMobile\\:0"]).hover {
             transform: scale(1.2);
             border-color: transparent;
             border-width: 2px;
             background-color: #0d55c0c5;
         }
-
-        .button-container:hover.dark-mode {
+        
+        .button-container:not([style*="--isMobile\\:0"]).hover.dark-mode {
             background-color: #1c77ffc5;
         }
 
@@ -111,7 +134,7 @@ layout: compress
                 </div>
                 {{ content }}
                 {% if page.project != true or page.donate == true %}
-                <a href="https://toss.me/onetwohour" target="_blank" rel="noopener noreferrer">
+                <a href="https://toss.me/onetwohour" target="_blank" rel="noopener noreferrer" style="display: inline-block;display: contents;width: fit-content; user-select: none;">
                     <div class="button-container exclude-dark-mode" >
                             <img src="https://static.toss.im/tds/favicon/apple-touch-icon-152x152.png" alt="">
                             <span class="exclude-dark-mode">toss Donation</span>
