@@ -1,14 +1,16 @@
 # Site
-title: Moonrise
-bio: "Minimal, one column jekyll theme."
-description: "Moonrise is a fresh take on the classic Moon"
+title: Software Study Diary
+bio: '얼렁뚱땅 개발 일지'
+description: "좌충우돌 얼렁뚱땅 개발과 공부를 위한 블로그"
 reading_time: true
 words_per_minute: 200
-logo: "assets/img/logo.png"
+logo: 'assets/img/logo.png'
 background: "assets/img/moonrise-background.jpg"
 tiled_bg: false # Set this true if you want to tile your background image, otherwise it will be covered
-locale: en_US
-url: https://TolgaTatli.github.io/Moonrise
+locale: ko_KR
+url: https://onetwohour.github.io
+futrue: true
+timezone: Asia/Seoul
 
 # Jekyll
 permalink: /:title/
@@ -26,6 +28,7 @@ sass:
     style: compressed
 
 # Comments
+disqus_shortname:   taylantatli
 
 # Social
 # if you don't have any of social below, comment the line.
@@ -36,20 +39,20 @@ sass:
 #ad-client:
 #ad-slot:
 #bing-verify:
-#email:
-twitter: username
-facebook: username
-github-url: username
+email:              chan8645@khu.ac.kr
+#twitter:            username
+#facebook:           username
+github-url:         onetwohour
 #stackoverflow:     123456/username   from a "http://stackoverflow.com/users/123456/username" link
 #linkedin:          username
 #xing:              username
-instagram: username
+#instagram: username
 #lastfm:            username
 #tumblr:            username
 #medium:            '@username'
 #pinterest:         username
 #foursquare:        username
-steam: username
+#steam: username
 #dribbble:          username
 #youtube:           username
 #youtube-channel:   channel

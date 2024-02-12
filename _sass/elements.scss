@@ -27,6 +27,7 @@
     @include font-rem(14);
     margin: 4px auto;
     @extend %btnextend;
+    &.exclude-dark-mode
     &.btn-success {
         background-color: $success;
         color: $white;

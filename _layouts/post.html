@@ -10,6 +10,78 @@ layout: compress
 
 <head>
     {% include head.html %}
+    <style>
+        :root {
+            --gradient-x: 50%; 
+            --gradient-y: 50%; 
+        }
+
+        .button-container {
+            display: flex;
+            margin: 0 auto;
+            background-color: rgba(1, 55, 171, 0.516);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none !important;
+            border: 2px solid transparent; 
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            width: max-content;
+        }
+
+        .button-container.dark-mode {
+            background-color: #0d55c0c5;
+        }
+
+        .button-container::before {
+            content: '';
+            position: absolute;
+            width: 75px;
+            height: 75px;
+            top: var(--gradient-y);
+            left: var(--gradient-x);
+            border-radius: 50%;
+            border-color: transparent;
+            z-index: -1;
+            background-image: radial-gradient(circle, rgba(218, 233, 255, 0.4), rgba(0, 0, 0, 0));
+            transition: opacity 1.0s ease;
+            transform: translate(-50%, -50%) scale(0);
+        }
+
+        .button-container:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .button-container:hover {
+            transform: scale(1.2);
+            border-color: transparent;
+            border-width: 2px;
+            background-color: #0d55c0c5;
+        }
+
+        .button-container:hover.dark-mode {
+            background-color: #1c77ffc5;
+        }
+
+        .button-container img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        .button-container span {
+            vertical-align: middle;
+            color: white;
+        }
+
+        .button-container:visited {
+            color: inherit !important;
+            text-decoration: none !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -18,6 +90,8 @@ layout: compress
     <header class="header" role="banner">
         <div class="wrapper animated fadeIn">
             <div class="content">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7550739542849833"
+                     crossorigin="anonymous"></script>  
                 <div class="post-title {% if page.feature %} feature {% endif %}">
                     <h1>{{ page.title }}</h1>
                     <h4>{{ page.date | date_to_string }}</h4>
@@ -36,9 +110,26 @@ layout: compress
                         </a>
                 </div>
                 {{ content }}
+                {% if page.project != true or page.donate == true %}
+                <a href="https://toss.me/onetwohour" target="_blank" rel="noopener noreferrer">
+                    <div class="button-container exclude-dark-mode" >
+                            <img src="https://static.toss.im/tds/favicon/apple-touch-icon-152x152.png" alt="">
+                            <span class="exclude-dark-mode">toss Donation</span>
+                    </div>
+                </a>
+                {% endif %}
                 <div class="entry-meta">
                     {% include meta.html %}
                 </div>
+                <script src="https://utteranc.es/client.js"
+                        repo="onetwohour/blog-comments"
+                        issue-term="pathname"
+                        theme="github-light"
+                        crossorigin="anonymous"
+                        async>
+                </script>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7550739542849833"
+                crossorigin="anonymous"></script>
             </div>
         </div>
         
