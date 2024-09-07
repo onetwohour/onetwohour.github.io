@@ -1,6 +1,33 @@
+                    <style>
+                        #copyAlert {
+                            display: none;
+                            position: fixed;
+                            color: white;
+                            padding: 15px 20px;
+                            bottom: 15%;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            border-radius: 10px;
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                            font-size: 16px;
+                            z-index: 1000;
+                            opacity: 0;
+                            transition: opacity 0.5s ease-in-out;
+                            pointer-events: none;
+                            user-select: none;
+                        }
+                        #copyAlert.show {
+                            display: block;
+                            opacity: 1;
+                        }
+                        #copyAlert.hide {
+                            display: block;
+                            opacity: 0;
+                        }
+                    </style>
                     <hr class="hr-line">
                     <h3 class="title" style="font-size:30px;">
-                        {% if site.email %}<a class="social-btn" href="mailto:{{ site.email }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-fw fa-envelope-square"></i></a>{% endif %}
+                        {% if site.email %}<a class="social-btn" target="_blank" rel="noopener noreferrer" onclick="copyText()"><i class="fa fa-fw fa-envelope-square"></i></a>{% endif %}
                         {% if site.twitter %}<a class="social-btn" href="http://twitter.com/{{ site.twitter }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-fw fa-twitter-square"></i></a>{% endif %}
                         {% if site.facebook %}<a class="social-btn" href="http://facebook.com/{{ site.facebook }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-fw fa-facebook-square"></i></a>{% endif %}
                         {% if site.google.plus %}<a class="social-btn" href="http://plus.google.com/+{{ site.google.plus }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-fw fa-google-plus-square"></i></a>{% endif %}
@@ -26,3 +53,20 @@
                         {% if site.xmpp %}<a class="social-btn" href="xmpp:{{ site.xmpp }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-fw fa-lightbulb-o"></i></a>{% endif %}
                         {% if site.hackernews %}<a class="social-btn" href="https://news.ycombinator.com/user?id={{ site.hackernews }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-fw fa-hacker-news"></i></a>{% endif %}
                   </h3>
+                  <div id="copyAlert" class="hide">copied!</div>
+                  <script>
+                    const copyText = () => {
+                        var text = "{{ site.email }}";
+                        const alertBox = document.getElementById("copyAlert");
+            
+                        navigator.clipboard.writeText(text)
+                        .then(() => {
+                            alertBox.classList.remove("hide");
+                            alertBox.classList.add("show");
+                            setTimeout(() => {
+                                alertBox.classList.remove("show");
+                                alertBox.classList.add("hide");
+                            }, 700);
+                        });
+                    };
+                  </script>
