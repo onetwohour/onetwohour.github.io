@@ -117,3 +117,32 @@ body.dark-mode {
 </style>
 
 <link rel="alternate" type="application/rss+xml" href="{{ site.url }}/feed.xml" title="{{ site.title }} Feed">
+
+<script>
+window.addEventListener('pageshow', function(event) {
+  if (event.persisted) {
+    document.body.style.display = 'none';
+    setTimeout(() => {
+      document.body.style.display = '';
+      if (typeof restartAnimations === 'function') {
+        restartAnimations();
+      }
+    }, 50);
+  }
+});
+function restartAnimations() {
+    const animatedElements = document.querySelectorAll('.animated');
+    animatedElements.forEach(el => {
+        if (el.classList.contains('fadeOut')) {
+            el.classList.remove('fadeOut');
+            if (!el.classList.contains('fadeIn')) {
+                el.classList.add('fadeIn');
+            }
+        }
+        el.classList.remove('animated');
+        void el.offsetWidth;
+        el.classList.add('animated');
+    });
+}
+</script>
+  
