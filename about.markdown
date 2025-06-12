@@ -2,7 +2,7 @@
 layout: page
 title: About
 tags: [about]
-date: 2024-01-06
+date: 2025-06-12
 comments: false
 ---
     
@@ -16,6 +16,8 @@ comments: false
 게임콘텐츠트랙 과정에 있습니다.  
 최고는 못되더라도 최선은 다합니다.
 
+레이 트레이싱, 메쉬 파괴 등 게임 그래픽스 관련을 배우고 있습니다.
+
 <br/>
 <br/>
 
@@ -26,6 +28,6 @@ comments: false
 
 ## E-mail
 
-chan8645@khu.ac.kr
+mail@onetwohour.com
 
 ---
