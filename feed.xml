@@ -15,6 +15,7 @@ layout: null
     {% for post in site.posts limit:100 %}
       <item>
         <title>{{ post.title | xml_escape }}</title>
+        <summary>{{ post.excerpt | strip_html | xml_escape }}</summary>
         <description>{{ post.content | xml_escape }}</description>
         <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
         <link>{{ post.url | prepend: site.baseurl | prepend: site.url }}</link>
