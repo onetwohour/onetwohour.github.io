@@ -11,6 +11,7 @@ layout: compress
 <head>
     {% include head.html %}
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cookie&display=swap');
         :root {
             --gradient-x: 50%; 
             --gradient-y: 50%; 
@@ -20,8 +21,8 @@ layout: compress
         .button-container {
             display: flex;
             margin: 0 auto;
-            background-color: rgba(1, 55, 171, 0.516);
-            color: white;
+            background-color: #e6c40080;
+            color: black;
             padding: 10px 20px;
             border-radius: 5px;
             text-decoration: none !important;
@@ -31,6 +32,8 @@ layout: compress
             overflow: hidden;
             width: max-content;
             z-index: 9999; 
+            font-size: 20px;
+            font-family: 'Cookie';
         }
 
         .button-container.dark-mode {
@@ -47,7 +50,7 @@ layout: compress
             border-radius: 50%;
             border-color: transparent;
             z-index: -1;
-            background-image: radial-gradient(circle, rgba(218, 233, 255, 0.4), rgba(0, 0, 0, 0));
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
             transition: opacity 1.0s ease;
             transform: translate(-50%, -50%) scale(0);
         }
@@ -64,11 +67,11 @@ layout: compress
                 transform: scale(1.2);
                 border-color: transparent;
                 border-width: 2px;
-                background-color: #0d55c0c5;
+                background-color: #ffdd00d0;
             }
             
             .button-container:not([style*="--isMobile\\:1"]):hover.dark-mode {
-                background-color: #1c77ffc5;
+                background-color: #c9ab00d0;
             }
         }
 
@@ -81,11 +84,11 @@ layout: compress
             transform: scale(1.2);
             border-color: transparent;
             border-width: 2px;
-            background-color: #0d55c0c5;
+            background-color: #e6c200d0;
         }
         
         .button-container:not([style*="--isMobile\\:0"]).hover.dark-mode {
-            background-color: #1c77ffc5;
+            background-color: #c9ab00d0;
         }
 
         .button-container img {
@@ -97,7 +100,7 @@ layout: compress
 
         .button-container span {
             vertical-align: middle;
-            color: white;
+            color: black;
         }
 
         .button-container:visited {
@@ -134,10 +137,9 @@ layout: compress
                 </div>
                 {{ content }}
                 {% if page.project != true or page.donate == true %}
-                <a href="https://toss.me/onetwohour" target="_blank" rel="noopener noreferrer" style="display: inline-block;display: contents;width: fit-content; user-select: none;">
+                <a href="https://www.buymeacoffee.com/onetwohour" target="_blank" rel="noopener noreferrer" style="display: inline-block;display: contents;width: fit-content; user-select: none;">
                     <div class="button-container exclude-dark-mode" >
-                            <img src="https://static.toss.im/tds/favicon/apple-touch-icon-152x152.png" alt="">
-                            <span class="exclude-dark-mode">toss Donation</span>
+                            <span class="exclude-dark-mode">☕️ Buy me a coffee</span>
                     </div>
                 </a>
                 {% endif %}
