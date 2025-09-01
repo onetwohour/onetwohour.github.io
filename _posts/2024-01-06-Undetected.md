@@ -6,7 +6,7 @@ excerpt: "게임엔진기초수업 과제 : Team perfoce"
 tag: 
 - 포트폴리오
 - 과제
-- 게임 개발
+- 게임개발
 comments: true
 published: true
 project: true

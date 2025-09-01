@@ -6,6 +6,7 @@ excerpt: "LSTM을 이용해 손의 움직임을 추적해 보자"
 tag: 
 - 포트폴리오
 - 과제
+- 딥러닝
 comments: true
 published: true
 project: true

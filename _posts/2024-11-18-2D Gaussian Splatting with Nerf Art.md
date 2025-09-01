@@ -6,6 +6,8 @@ excerpt: "2D Gaussian Splatting 기술과 Nerf Art 기슬을 결합해 보자"
 tag: 
 - 포트폴리오
 - 과제
+- 딥러닝
+- 가우시안 스플래팅
 comments: true
 published: true
 project: true
