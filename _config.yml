@@ -32,9 +32,9 @@ disqus_shortname:   taylantatli
 
 # Social
 # if you don't have any of social below, comment the line.
-#google:
+google:
+  analytics: G-1DK8H9CQ7L
 # plus: username
-#analytics:
 #verify:
 #ad-client:
 #ad-slot:
