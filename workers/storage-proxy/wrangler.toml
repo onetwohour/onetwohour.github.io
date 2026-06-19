@@ -1,0 +1,14 @@
+name = "onetwohour-storage-proxy"
+main = "src/index.ts"
+compatibility_date = "2026-06-19"
+workers_dev = false
+
+[dev]
+port = 8787
+
+[[routes]]
+pattern = "storage.onetwohour.com/*"
+zone_name = "onetwohour.com"
+
+[vars]
+SUPABASE_STORAGE_ORIGIN = "https://cdpxmvjsgfpfkivyjvtv.supabase.co"

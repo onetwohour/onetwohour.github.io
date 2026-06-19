@@ -1,0 +1,167 @@
+// Sticky site header: logo, search, dark toggle, nav bar
+.wk-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg);
+  border-bottom: 1px solid var(--bd);
+  box-shadow: 0 1px 0 var(--shadow);
+}
+
+.wk-header__bar {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 22px;
+  height: 56px;
+}
+
+.wk-logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  flex: none;
+}
+.wk-logo__img {
+  height: 28px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  border-radius: 6px;
+  display: block;
+}
+.wk-logo__word {
+  font-weight: 800; font-size: 18px;
+  letter-spacing: -.02em;
+  color: var(--fg);
+  b, .accent { color: var(--accent); font-weight: 800; }
+}
+
+.wk-search {
+  flex: 1;
+  max-width: 520px;
+  position: relative;
+}
+.wk-search__input {
+  width: 100%;
+  height: 38px;
+  padding: 0 40px 0 14px;
+  border: 1px solid var(--bd);
+  background: var(--bg2);
+  color: var(--fg);
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  &:focus { border-color: var(--accent); }
+}
+.wk-search__icon {
+  position: absolute;
+  right: 13px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--fg3);
+  pointer-events: none;
+}
+
+.wk-iconbtn {
+  width: 38px; height: 38px;
+  border: 1px solid var(--bd);
+  background: var(--bg2);
+  color: var(--fg);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  flex: none;
+  display: flex; align-items: center; justify-content: center;
+  &:hover { border-color: var(--bd2); }
+}
+
+// animated sun / moon toggle
+.wk-theme-btn { position: relative; overflow: hidden; }
+.wk-theme-btn .wk-ic {
+  position: absolute;
+  inset: 0;
+  width: 18px; height: 18px;
+  margin: auto;
+  transition: transform .45s cubic-bezier(.34, 1.56, .64, 1), opacity .3s ease;
+}
+.wk-ic--sun { color: #e8a33d; opacity: 1; transform: rotate(0) scale(1); }
+.wk-ic--moon { color: #aab2c0; opacity: 0; transform: rotate(-80deg) scale(.4); }
+:root[data-theme="dark"] .wk-ic--sun { opacity: 0; transform: rotate(80deg) scale(.4); }
+:root[data-theme="dark"] .wk-ic--moon { opacity: 1; transform: rotate(0) scale(1); }
+@media (prefers-reduced-motion: reduce) {
+  .wk-theme-btn .wk-ic { transition: opacity .15s ease; }
+}
+
+// nav bar
+.wk-nav {
+  border-top: 1px solid var(--bd);
+  background: var(--bg2);
+}
+.wk-nav__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 22px;
+  height: 40px;
+  font-size: 13.5px;
+}
+.wk-nav__links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+.wk-nav__link {
+  padding: 8px 13px;
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 6px;
+  color: var(--fg2);
+  white-space: nowrap;
+  &:hover { color: var(--fg); }
+  &.is-active {
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--bg);
+  }
+}
+.wk-nav__stat {
+  justify-self: end;
+  color: var(--fg3);
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+// mobile menu toggle (hidden on desktop)
+.wk-menu-toggle { display: none; }
+
+@media (max-width: 760px) {
+  .wk-header__bar { gap: 10px; height: 52px; }
+  .wk-logo__word { font-size: 16px; }
+  .wk-search { max-width: none; }
+  .wk-menu-toggle {
+    display: flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px; flex: none;
+    border: 1px solid var(--bd); background: var(--bg2);
+    color: var(--fg); border-radius: 6px; cursor: pointer; font-size: 16px;
+  }
+  .wk-nav__inner {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    padding: 8px 14px 12px;
+    gap: 2px;
+  }
+  .wk-nav.is-open .wk-nav__inner { display: flex; }
+  .wk-nav__edge { display: none; }
+  .wk-nav__links { flex-direction: column; align-items: stretch; gap: 2px; }
+  .wk-nav__link { padding: 10px 12px; }
+  .wk-nav__stat { padding: 6px 12px 0; }
+  .wk-spacer { display: none; }
+}

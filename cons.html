@@ -1,0 +1,18 @@
+---
+layout: default
+title: 콘 등록·관리
+permalink: /cons/
+sitemap: false
+---
+<main class="wk-wrap wk-conpage" data-wk-conpage>
+  <h1 class="wk-conpage__title">콘</h1>
+  <div data-con-auth></div>
+  <div class="wk-conpage__card" data-con-minewrap hidden>
+    <h2>내가 등록한 콘팩</h2>
+    <div class="wk-conpage__mine" data-con-mine></div>
+  </div>
+</main>
+{%- if site.supabase.url -%}
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="{{ site.url }}/assets/js/cons.js?v={{ site.time | date: '%s' }}" defer></script>
+{%- endif -%}

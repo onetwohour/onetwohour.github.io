@@ -1,0 +1,123 @@
+// List (글 목록) / project / page / 404 screens
+.wk-list {
+  max-width: 1120px;
+  padding: 22px 22px 52px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 30px;
+  align-items: start;
+}
+.wk-list__main { min-width: 0; }
+.wk-list__main--full { grid-column: 1 / -1; }
+
+.wk-list__top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
+.wk-list__title { margin: 0; font-size: 24px; font-weight: 800; }
+.wk-list__count { font-size: 13px; color: var(--fg3); }
+.wk-list__intro { margin-bottom: 24px; }
+.wk-list__empty { padding: 40px 0; text-align: center; color: var(--fg3); font-size: 14px; }
+
+// sort tabs
+.wk-sorttabs { display: flex; gap: 8px; margin: 14px 0 20px; flex-wrap: wrap; }
+.wk-sorttab {
+  padding: 7px 15px;
+  border: 1px solid var(--bd);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--card);
+  color: var(--fg2);
+  &.is-active { font-weight: 700; background: var(--accent); color: var(--accenttext); border-color: var(--accent); }
+}
+
+// post cards
+.wk-postcards { display: flex; flex-direction: column; gap: 16px; }
+.wk-postcard {
+  display: flex;
+  gap: 18px;
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  background: var(--card);
+  overflow: hidden;
+  text-decoration: none;
+  &:hover { border-color: var(--accent); }
+}
+.wk-postcard__thumb {
+  width: 150px;
+  flex: none;
+  background: var(--bg2);
+}
+.wk-postcard__body { flex: 1; min-width: 0; padding: 16px 16px 16px 0; }
+.wk-postcard__series { font-size: 11.5px; color: var(--accent); font-weight: 700; margin-bottom: 5px; }
+.wk-postcard__title { font-size: 17px; font-weight: 800; color: var(--fg); line-height: 1.4; }
+.wk-postcard__summary {
+  font-size: 13px; color: var(--fg2); line-height: 1.6; margin: 6px 0 9px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.wk-postcard__tags { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-bottom: 9px; }
+.wk-chip {
+  font-size: 11px;
+  color: var(--link);
+  background: var(--bg2);
+  padding: 2px 9px;
+  border-radius: 5px;
+  border: 1px solid var(--bd);
+}
+.wk-postcard__meta { font-size: 11.5px; color: var(--fg3); }
+
+// sidebar
+.wk-list__side { position: sticky; top: 112px; }
+.wk-tagfilter { display: flex; flex-direction: column; gap: 2px; }
+.wk-tagrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 7px 11px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  text-align: left;
+  background: transparent;
+  color: var(--fg);
+  font-weight: 500;
+  &:hover { background: var(--bg2); }
+  &.is-active { background: var(--bg2); color: var(--accent); font-weight: 700; }
+}
+.wk-tagrow__cnt { color: var(--fg3); }
+
+.wk-series {
+  display: block;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--bd);
+  text-decoration: none;
+  &:last-child { border-bottom: none; }
+}
+.wk-series__name { font-size: 13.5px; font-weight: 700; color: var(--fg); }
+.wk-series__count { font-size: 11.5px; color: var(--fg3); margin-top: 2px; }
+
+// generic page (about, tag archive)
+.wk-pagedoc { max-width: 840px; padding: 30px 22px 70px; }
+.wk-pagedoc__inner { min-width: 0; }
+.wk-tagindex { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 26px; }
+.wk-tagindex__date { font-size: 12px; color: var(--fg3); margin-left: 6px; }
+
+// 404
+.wk-404 { max-width: 600px; padding: 80px 22px; text-align: center; }
+.wk-404__code { font-size: 88px; font-weight: 800; color: var(--accent); font-family: var(--mono-font); line-height: 1; }
+.wk-404__title { margin: 14px 0 8px; font-size: 24px; font-weight: 800; }
+.wk-404__desc { color: var(--fg2); font-size: 14px; margin: 0 0 22px; }
+.wk-404__actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .wk-list { grid-template-columns: 1fr; }
+  .wk-list__side { display: none; }
+}
+@media (max-width: 760px) {
+  .wk-list { padding: 20px 16px 56px; }
+  .wk-postcard__thumb { width: 96px; }
+  .wk-postcard__body { padding: 12px 12px 12px 0; }
+  .wk-postcard__title { font-size: 15px; }
+}

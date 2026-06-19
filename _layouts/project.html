@@ -1,0 +1,40 @@
+---
+layout: default
+---
+{%- assign projects = site.posts | where: "project", true -%}
+<main class="wk-list wk-wrap" data-screen="프로젝트">
+  <div class="wk-list__main wk-list__main--full">
+    <div class="wk-list__top">
+      <h1 class="wk-list__title">{{ page.title | default: "프로젝트" }}</h1>
+      <span class="wk-list__count">{{ projects | size }}개</span>
+    </div>
+
+    {%- if content and content != '' -%}
+    <div class="wk-doc__body wk-list__intro">{{ content }}</div>
+    {%- endif -%}
+
+    <div class="wk-postcards">
+      {%- for p in projects -%}
+      <a class="wk-postcard" href="{{ p.url | prepend: site.url }}">
+        {%- capture cover -%}{%- include wk-cover.html post=p -%}{%- endcapture -%}
+        {%- if cover != '' -%}
+        <div class="wk-postcard__thumb" style="background-image:url('{{ cover }}');background-size:cover;background-position:center;background-repeat:no-repeat;"></div>
+        {%- else -%}
+        <div class="wk-postcard__thumb"></div>
+        {%- endif -%}
+        <div class="wk-postcard__body">
+          <div class="wk-postcard__title">{{ p.title }}</div>
+          <div class="wk-postcard__summary">{{ p.excerpt | strip_html | truncate: 140 }}</div>
+          {%- if p.tag and p.tag.first -%}
+          <div class="wk-postcard__tags">
+            {%- for t in p.tag -%}{%- if t and t != '' -%}<span class="wk-chip">{{ t }}</span>{%- endif -%}{%- endfor -%}
+          </div>
+          {%- endif -%}
+          <div class="wk-postcard__meta">{{ p.date | date: '%Y-%m-%d' }}</div>
+        </div>
+      </a>
+      {%- endfor -%}
+    </div>
+    {%- if projects.size == 0 -%}<div class="wk-list__empty">아직 등록된 프로젝트가 없습니다.</div>{%- endif -%}
+  </div>
+</main>

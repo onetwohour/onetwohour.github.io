@@ -1,0 +1,83 @@
+---
+layout: default
+---
+{%- assign blog = site.posts | where_exp: "p", "p.project != true" -%}
+
+{%- assign tags = "" | split: "," -%}
+{%- for p in blog -%}{%- if p.tag -%}{%- assign tags = tags | concat: p.tag -%}{%- endif -%}{%- endfor -%}
+{%- assign tags = tags | where_exp: "t", "t != empty" -%}
+{%- assign uniq_tags = tags | uniq | sort -%}
+
+{%- assign series_all = blog | map: "series" | uniq -%}
+
+<main class="wk-list wk-wrap" data-screen="글 목록">
+  <div class="wk-list__main">
+    <div class="wk-list__top">
+      <h1 class="wk-list__title">{{ page.title | default: "전체 글" }}</h1>
+      <span class="wk-list__count">{{ blog | size }}개</span>
+    </div>
+
+    <div class="wk-sorttabs" data-wk-sort>
+      <button class="wk-sorttab is-active" type="button" data-sort="new">최신순</button>
+      <button class="wk-sorttab" type="button" data-sort="old">오래된순</button>
+      <button class="wk-sorttab" type="button" data-sort="title">제목순</button>
+    </div>
+
+    <div class="wk-postcards" data-wk-list>
+      {%- for p in blog -%}
+      {%- assign tagkey = p.tag | join: '|' | downcase | prepend: '|' | append: '|' -%}
+      <a class="wk-postcard" href="{{ p.url | prepend: site.url }}"
+         data-date="{{ p.date | date: '%Y%m%d%H%M' }}"
+         data-title="{{ p.title | escape }}"
+         data-tags="{{ tagkey }}">
+        {%- capture cover -%}{%- include wk-cover.html post=p -%}{%- endcapture -%}
+        {%- if cover != '' -%}
+        <div class="wk-postcard__thumb" style="background-image:url('{{ cover }}');background-size:cover;background-position:center;background-repeat:no-repeat;"></div>
+        {%- else -%}
+        <div class="wk-postcard__thumb"></div>
+        {%- endif -%}
+        <div class="wk-postcard__body">
+          {%- if p.series -%}<div class="wk-postcard__series">{{ p.series }}</div>{%- endif -%}
+          <div class="wk-postcard__title">{{ p.title }}</div>
+          <div class="wk-postcard__summary">{{ p.excerpt | strip_html | truncate: 140 }}</div>
+          {%- if p.tag and p.tag.first -%}
+          <div class="wk-postcard__tags">
+            {%- for t in p.tag -%}{%- if t and t != '' -%}<span class="wk-chip">{{ t }}</span>{%- endif -%}{%- endfor -%}
+          </div>
+          {%- endif -%}
+          {%- assign rt = p.content | strip_html | number_of_words | divided_by: site.words_per_minute | plus: 1 -%}
+          <div class="wk-postcard__meta">{{ p.date | date: '%Y-%m-%d' }} · {{ rt }}분</div>
+        </div>
+      </a>
+      {%- endfor -%}
+    </div>
+    <div class="wk-list__empty" data-wk-empty hidden>해당 분류의 글이 없습니다.</div>
+  </div>
+
+  <aside class="wk-list__side">
+    <div class="wk-card wk-card--pad">
+      <div class="wk-card__title">분류 / 태그</div>
+      <div class="wk-tagfilter" data-wk-filter>
+        <button class="wk-tagrow is-active" type="button" data-tag="*"><span>전체</span><span class="wk-tagrow__cnt">{{ blog | size }}</span></button>
+        {%- for t in uniq_tags -%}
+          {%- assign cnt = 0 -%}
+          {%- for x in tags -%}{%- if x == t -%}{%- assign cnt = cnt | plus: 1 -%}{%- endif -%}{%- endfor -%}
+          <button class="wk-tagrow" type="button" data-tag="{{ t | downcase }}"><span>{{ t }}</span><span class="wk-tagrow__cnt">{{ cnt }}</span></button>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- if series_all.size > 0 -%}
+    <div class="wk-card wk-card--pad">
+      <div class="wk-card__title">시리즈</div>
+      {%- for s in series_all -%}{%- if s and s != '' -%}
+        {%- assign scount = blog | where: "series", s | size -%}
+        <a class="wk-series" href="{{ site.url }}/posts/">
+          <div class="wk-series__name">{{ s }}</div>
+          <div class="wk-series__count">{{ scount }}편</div>
+        </a>
+      {%- endif -%}{%- endfor -%}
+    </div>
+    {%- endif -%}
+  </aside>
+</main>

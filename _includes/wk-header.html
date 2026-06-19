@@ -1,0 +1,44 @@
+{%- comment -%} Sticky header: logo, search, dark toggle, nav bar {%- endcomment -%}
+<header class="wk-header">
+  <div class="wk-header__bar">
+    <a href="{{ site.url }}/" class="wk-logo" aria-label="{{ site.title }} 홈">
+      {%- if site.logo -%}<img class="wk-logo__img" src="{{ site.url }}/{{ site.logo }}" alt="{{ site.title }}">{%- endif -%}
+      <span class="wk-logo__word">{{ site.title }}</span>
+    </a>
+    <form class="wk-search" action="{{ site.url }}/search/" method="get" role="search">
+      <input class="wk-search__input" type="search" name="q" id="wk-search-input"
+             placeholder="검색" autocomplete="off"
+             value="{{ page.search_query }}">
+      <span class="wk-search__icon" aria-hidden="true">⌕</span>
+    </form>
+    <span class="wk-spacer"></span>
+    <button class="wk-iconbtn wk-theme-btn" id="theme-toggle" type="button" title="테마 전환" aria-label="다크 모드로 전환">
+      <svg class="wk-ic wk-ic--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2"></circle>
+        <path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8l1.8-1.8M18 6l1.8-1.8"></path>
+      </svg>
+      <svg class="wk-ic wk-ic--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"></path>
+      </svg>
+    </button>
+    <button class="wk-menu-toggle" id="wk-menu-toggle" type="button" aria-label="메뉴" aria-expanded="false">☰</button>
+  </div>
+  <nav class="wk-nav" id="wk-nav" aria-label="주 메뉴">
+    <div class="wk-nav__inner">
+      <span class="wk-nav__edge" aria-hidden="true"></span>
+      <div class="wk-nav__links">
+        {%- assign cur = page.url -%}
+        {%- for item in site.data.navigation -%}
+          {%- assign is_active = false -%}
+          {%- if item.url == '/' -%}
+            {%- if cur == '/' -%}{%- assign is_active = true -%}{%- endif -%}
+          {%- elsif cur contains item.url -%}
+            {%- assign is_active = true -%}
+          {%- endif -%}
+          <a class="wk-nav__link{% if is_active %} is-active{% endif %}" href="{{ site.url }}{{ item.url }}">{{ item.title }}</a>
+        {%- endfor -%}
+      </div>
+      <span class="wk-nav__stat">글 {{ site.posts | size }} · 태그 {{ site.posts | map: 'tag' | join: ',' | split: ',' | uniq | size }}</span>
+    </div>
+  </nav>
+</header>

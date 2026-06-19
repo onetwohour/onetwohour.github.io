@@ -1,0 +1,98 @@
+---
+layout: default
+---
+{%- comment -%} blog posts = non-project posts {%- endcomment -%}
+{%- assign blog = site.posts | where_exp: "p", "p.project != true" -%}
+{%- assign featured = blog | where: "featured", true | first -%}
+{%- unless featured -%}{%- assign featured = blog | first -%}{%- endunless -%}
+
+{%- comment -%} aggregate tags {%- endcomment -%}
+{%- assign tags = "" | split: "," -%}
+{%- for p in blog -%}{%- if p.tag -%}{%- assign tags = tags | concat: p.tag -%}{%- endif -%}{%- endfor -%}
+{%- assign tags = tags | where_exp: "t", "t != empty" -%}
+{%- assign uniq_tags = tags | uniq | sort -%}
+
+<main class="wk-home wk-wrap" data-screen="대문">
+
+  <header class="wk-masthead">
+    <h1 class="wk-masthead__title">{{ site.title }}</h1>
+    <p class="wk-masthead__desc">{{ site.description }}</p>
+  </header>
+
+  <div class="wk-home__grid">
+    <div class="wk-home__col">
+      {%- if featured -%}
+      <h2 class="wk-home__h">대표 문서</h2>
+      <a class="wk-feature" data-wk-feature href="{{ featured.url | prepend: site.url }}">
+        {%- capture fcover -%}{%- include wk-cover.html post=featured -%}{%- endcapture -%}
+        {%- if fcover != '' -%}
+        <div class="wk-feature__thumb" style="background-image:url('{{ fcover }}');background-size:cover;background-position:center;background-repeat:no-repeat;"></div>
+        {%- else -%}
+        <div class="wk-feature__thumb"></div>
+        {%- endif -%}
+        <div class="wk-feature__body">
+          {%- assign ftag = featured.tag | first -%}
+          <div class="wk-feature__cat">{{ ftag }}</div>
+          <div class="wk-feature__title">{{ featured.title }}</div>
+          <div class="wk-feature__desc">{{ featured.excerpt | strip_html | truncate: 110 }}</div>
+          <div class="wk-feature__meta">{{ featured.date | date: '%Y-%m-%d' }}{% if featured.tag %} · {{ featured.tag | join: ', ' }}{% endif %}</div>
+        </div>
+      </a>
+      {%- endif -%}
+
+      <section class="wk-popular" data-wk-popular hidden>
+        <h2 class="wk-home__h">인기 글</h2>
+        <div class="wk-ranklist" data-wk-popular-list></div>
+      </section>
+
+      <div class="wk-home__hrow">
+        <h2 class="wk-home__h">최신 글</h2>
+        <a class="wk-home__more" href="{{ site.url }}/posts/">더보기</a>
+      </div>
+      <div class="wk-ranklist">
+        {%- assign rank = 0 -%}
+        {%- for p in blog limit: 6 -%}
+          {%- unless p.url == featured.url -%}
+          {%- assign rank = rank | plus: 1 -%}
+          {%- if rank <= 5 -%}
+          <a class="wk-rank" href="{{ p.url | prepend: site.url }}">
+            <span class="wk-rank__num">{{ rank }}</span>
+            <div class="wk-rank__body">
+              <div class="wk-rank__title">{{ p.title }}</div>
+              <div class="wk-rank__meta">{% if p.tag and p.tag.first %}{{ p.tag.first }} · {% endif %}{{ p.date | date: '%Y-%m-%d' }}</div>
+            </div>
+          </a>
+          {%- endif -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <aside class="wk-home__side">
+      <div class="wk-card wk-card--pad">
+        <div class="wk-card__title">이 블로그</div>
+        <div class="wk-bloginfo">
+          <div class="wk-bloginfo__row"><span>전체 글</span><b>{{ blog | size }}</b></div>
+          <div class="wk-bloginfo__row"><span>분류 수</span><b>{{ uniq_tags | size }}</b></div>
+        </div>
+        <div class="wk-bloginfo__links">
+          <a href="{{ site.url }}/about/">About</a>
+          {% if site.github-url %}<a href="https://github.com/{{ site.github-url }}" target="_blank" rel="noopener noreferrer">GitHub</a>{% endif %}
+        </div>
+      </div>
+
+      {%- if uniq_tags.size > 0 -%}
+      <div class="wk-card wk-card--pad">
+        <div class="wk-card__title">분류</div>
+        <div class="wk-tagcloud">
+          {%- for t in uniq_tags -%}
+            {%- assign cnt = 0 -%}
+            {%- for x in tags -%}{%- if x == t -%}{%- assign cnt = cnt | plus: 1 -%}{%- endif -%}{%- endfor -%}
+            <a class="wk-tagcloud__item" href="{{ site.url }}/tags/#{{ t }}">{{ t }} <span class="wk-tagcloud__cnt">{{ cnt }}</span></a>
+          {%- endfor -%}
+        </div>
+      </div>
+      {%- endif -%}
+    </aside>
+  </div>
+</main>

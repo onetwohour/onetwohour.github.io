@@ -1,0 +1,18 @@
+---
+permalink: /search.json
+sitemap: false
+---
+[
+{%- assign blog = site.posts | where_exp: "p", "p.project != true" -%}
+{%- for p in blog -%}
+{
+"title": {{ p.title | jsonify }},
+"url": {{ p.url | prepend: site.url | jsonify }},
+"date": {{ p.date | date: '%Y-%m-%d' | jsonify }},
+"cover": {%- capture _cov -%}{%- include wk-cover.html post=p -%}{%- endcapture -%}{{ _cov | jsonify }},
+"tags": {{ p.tag | jsonify }},
+"summary": {{ p.excerpt | strip_html | strip_newlines | truncate: 200 | jsonify }},
+"content": {{ p.content | strip_html | strip_newlines | truncate: 1200 | jsonify }}
+}{%- unless forloop.last -%},{%- endunless -%}
+{%- endfor -%}
+]

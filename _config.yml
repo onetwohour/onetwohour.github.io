@@ -1,0 +1,95 @@
+# Site
+title: Software Study Diary
+bio: '얼렁뚱땅 개발 일지'
+description: "좌충우돌 얼렁뚱땅 개발 블로그"
+reading_time: true
+words_per_minute: 200
+logo: 'assets/img/logo.png'
+locale: ko_KR
+url: https://blog.onetwohour.com
+repo: onetwohour/onetwohour.github.io
+future: true
+timezone: Asia/Seoul
+
+# Supabase (조회수 집계) — publishable(anon) 키는 공개용이라 클라이언트에 노출돼도 됨. 보호는 RLS로.
+supabase:
+  url: https://cdpxmvjsgfpfkivyjvtv.supabase.co
+  anon_key: sb_publishable_0iXD4flwS1Elbkcb4ynC9w_5Z-PrAwm
+
+# Jekyll
+permalink: /:title/
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  enable_coderay: false
+mathjax: true
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Social
+# if you don't have any of social below, comment the line.
+google:
+  analytics: G-1DK8H9CQ7L
+# plus: username
+#verify:
+#ad-client:
+#ad-slot:
+#bing-verify:
+email:              mail@onetwohour.com
+#twitter:            username
+#facebook:           username
+github-url:         onetwohour
+#stackoverflow: 123456/username   from a "http://stackoverflow.com/users/123456/username" link
+#linkedin: username
+#xing: username
+#instagram: username
+#lastfm: username
+#tumblr: username
+#medium: '@username'
+#pinterest: username
+#foursquare: username
+#steam: username
+#dribbble: username
+#youtube: username
+#youtube-channel: channel
+#soundcloud: username
+#weibo: username
+#flickr: username
+#codepen: username
+#keybase: username
+#xmpp: username@server.com
+#hackernews: username
+
+# Plugins
+plugins:
+  - jekyll-mentions
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-seo-tag
+  - jekyll-paginate
+  - jekyll-include-cache
+
+jekyll-mentions:
+  base_url: https://github.com
+
+# Exclude list
+exclude:
+  [
+    README.md,
+    Gemfile,
+    Gemfile.lock,
+    node_modules,
+    gulpfile.js,
+    package.json,
+    _site,
+    src,
+    vendor,
+    LICENSE,
+    Rakefile,
+  ]

@@ -1,0 +1,21 @@
+// WIKILOG design tokens — light default + [data-theme="dark"] override on <html>
+:root {
+  --bg:#ffffff; --bg2:#f6f6f3; --bg3:#eeece6; --card:#ffffff;
+  --bd:#e6e4dd; --bd2:#d7d4cb; --fg:#23262b; --fg2:#5b6069; --fg3:#9298a1;
+  --link:#2a64b4; --linkred:#d24a4a; --accent:#00a960; --accenttext:#ffffff;
+  --codebg:#f4f3ee; --codefg:#3a3f46; --mark:#fff3ad; --shadow:rgba(40,40,40,.08);
+  --tab:#f0eee8;
+
+  --ui-font:Pretendard,'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;
+  --serif-font:'Noto Serif KR',serif;
+  --mono-font:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --maxw:1280px;
+}
+
+:root[data-theme="dark"] {
+  --bg:#191a1c; --bg2:#202225; --bg3:#26282b; --card:#202225;
+  --bd:#34373c; --bd2:#3e4147; --fg:#e7e8ea; --fg2:#abafb6; --fg3:#787d85;
+  --link:#6aa6f0; --linkred:#f0736f; --accenttext:#0c1410;
+  --codebg:#15171a; --codefg:#c9cdd3; --mark:#5b4f15; --shadow:rgba(0,0,0,.45);
+  --tab:#2a2d31;
+}

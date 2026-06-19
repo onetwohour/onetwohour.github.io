@@ -1,0 +1,146 @@
+---
+layout: default
+---
+{%- assign full_url = page.url | prepend: site.url -%}
+{%- assign first_tag = page.tag | first -%}
+{%- assign rt_words = content | strip_html | number_of_words -%}
+{%- assign rt_min = rt_words | divided_by: site.words_per_minute | plus: 1 -%}
+{%- assign char_count = content | strip_html | strip_newlines | replace: ' ', '' | size -%}
+
+<main class="wk-doc wk-wrap" data-screen="문서" data-wk-slug="{{ page.url }}">
+  <article class="wk-doc__main">
+
+    {%- if first_tag -%}
+    <nav class="wk-breadcrumb" aria-label="위치">
+      <a href="{{ site.url }}/">대문</a> ›
+      <a href="{{ site.url }}/posts/">글 목록</a> ›
+      <a href="{{ site.url }}/tags/#{{ first_tag }}">{{ first_tag }}</a>
+    </nav>
+    {%- endif -%}
+
+    <header class="wk-doc__head">
+      <h1 class="wk-doc__title">{{ page.title }}</h1>
+      <div class="wk-doc__sub">
+        작성: {{ page.date | date: '%Y-%m-%d %H:%M' }}
+        {%- if site.repo %} · <a href="https://github.com/{{ site.repo }}/commits/master/{{ page.path }}" target="_blank" rel="noopener noreferrer">역사 보기</a>
+        · <a href="https://github.com/{{ site.repo }}/edit/master/{{ page.path }}" target="_blank" rel="noopener noreferrer">편집</a>{%- endif -%}
+      </div>
+    </header>
+
+    <div class="wk-doc__meta">
+      <span>읽는 시간 <b>약 {{ rt_min }}분</b></span>
+      <span class="wk-divider"></span>
+      <span>글자 수 <b>{{ char_count }}</b></span>
+      {%- if page.tag and first_tag -%}
+      <span class="wk-divider"></span>
+      <span class="wk-doc__metatags">
+        {%- for t in page.tag -%}{%- if t and t != '' -%}<a href="{{ site.url }}/tags/#{{ t }}">#{{ t }}</a>{%- endif -%}{%- endfor -%}
+      </span>
+      {%- endif -%}
+    </div>
+
+    <div class="wk-doc__flow">
+      {%- if page.infobox -%}
+      <aside class="wk-infobox">
+        <div class="wk-infobox__title">{{ page.infobox_title | default: page.title }}</div>
+        {%- if page.infobox_image -%}<div class="wk-infobox__img"><img src="{{ page.infobox_image }}" alt="{{ page.title }}"></div>{%- endif -%}
+        <table class="wk-infobox__table">
+          <tbody>
+          {%- for row in page.infobox -%}
+            <tr><th>{{ row.k }}</th><td>{{ row.v }}</td></tr>
+          {%- endfor -%}
+          </tbody>
+        </table>
+      </aside>
+      {%- endif -%}
+
+      <div class="wk-toc" data-wk-toc>
+        <div class="wk-toc__head">목차</div>
+        <div class="wk-toc__list" data-wk-toc-list></div>
+      </div>
+
+      <div class="wk-doc__body" data-wk-toc-source>
+        {{ content }}
+      </div>
+    </div>
+
+    <div class="wk-like" data-wk-like>
+      <button class="wk-like__btn" type="button" aria-pressed="false" aria-label="좋아요">
+        <span class="wk-like__ic" aria-hidden="true">♥</span>
+        <span class="wk-like__count" data-wk-like-count>0</span>
+      </button>
+    </div>
+
+    <div class="wk-share">
+      <span class="wk-share__label">공유</span>
+      <a class="wk-share__btn" href="https://twitter.com/intent/tweet?text={{ page.title | uri_escape }}&url={{ full_url | uri_escape }}" target="_blank" rel="noopener noreferrer" title="X(트위터)에 공유">𝕏</a>
+      <a class="wk-share__btn" href="https://www.facebook.com/sharer/sharer.php?u={{ full_url | uri_escape }}" target="_blank" rel="noopener noreferrer" title="페이스북에 공유">f</a>
+      <a class="wk-share__btn" href="https://www.linkedin.com/sharing/share-offsite/?url={{ full_url | uri_escape }}" target="_blank" rel="noopener noreferrer" title="링크드인에 공유">in</a>
+      <span class="wk-spacer"></span>
+      <button class="wk-share__copy" type="button" data-wk-copy="{{ full_url }}">링크 복사</button>
+    </div>
+
+    {%- if page.previous or page.next -%}
+    <nav class="wk-prevnext" aria-label="이전/다음 글">
+      {%- if page.previous -%}
+      <a class="wk-prevnext__item" href="{{ page.previous.url | prepend: site.url }}">
+        <span class="wk-prevnext__label">← 이전 글</span>
+        <span class="wk-prevnext__title">{{ page.previous.title }}</span>
+      </a>
+      {%- else -%}<span></span>{%- endif -%}
+      {%- if page.next -%}
+      <a class="wk-prevnext__item wk-prevnext__item--next" href="{{ page.next.url | prepend: site.url }}">
+        <span class="wk-prevnext__label">다음 글 →</span>
+        <span class="wk-prevnext__title">{{ page.next.title }}</span>
+      </a>
+      {%- else -%}<span></span>{%- endif -%}
+    </nav>
+    {%- endif -%}
+
+    {%- if first_tag -%}
+    {%- assign related = site.posts | where_exp: "p", "p.tag contains first_tag" -%}
+    {%- assign rel_count = 0 -%}
+    {%- assign has_related = false -%}
+    {%- for p in related -%}{%- unless p.url == page.url -%}{%- assign has_related = true -%}{%- endunless -%}{%- endfor -%}
+    {%- if has_related -%}
+    <section class="wk-related">
+      <h2 class="wk-section-title">관련 글</h2>
+      <div class="wk-related__grid">
+        {%- for p in related -%}
+          {%- unless p.url == page.url -%}{%- if rel_count < 3 -%}
+          <a class="wk-related__card" href="{{ p.url | prepend: site.url }}">
+            {%- capture rcover -%}{%- include wk-cover.html post=p -%}{%- endcapture -%}
+            {%- if rcover != '' -%}<div class="wk-related__thumb" style="background-image:url('{{ rcover }}');background-size:cover;background-position:center;background-repeat:no-repeat;"></div>{%- else -%}<div class="wk-related__thumb"></div>{%- endif -%}
+            <div class="wk-related__body">
+              <div class="wk-related__title">{{ p.title }}</div>
+              <div class="wk-related__meta">{{ p.date | date: '%Y-%m-%d' }}</div>
+            </div>
+          </a>
+          {%- assign rel_count = rel_count | plus: 1 -%}{%- endif -%}{%- endunless -%}
+        {%- endfor -%}
+      </div>
+    </section>
+    {%- endif -%}
+    {%- endif -%}
+
+    {%- if page.comments != false -%}
+    <section class="wk-comments" data-wk-comments data-slug="{{ page.url }}">
+      <h2 class="wk-section-title">댓글 <span class="wk-cm-count" data-wk-cm-count></span></h2>
+      <div class="wk-cm-auth" data-wk-cm-auth></div>
+      <div class="wk-cm-list" data-wk-cm-list><div class="wk-cm-empty">댓글을 불러오는 중…</div></div>
+    </section>
+    {%- endif -%}
+
+  </article>
+
+  <aside class="wk-doc__side">
+    <nav class="wk-side-toc" data-wk-toc aria-label="목차">
+      <div class="wk-side-toc__head">목차</div>
+      <div class="wk-side-toc__list" data-wk-toc-list></div>
+    </nav>
+  </aside>
+</main>
+{%- if site.supabase.url and page.comments != false -%}
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="{{ site.url }}/assets/js/comments.js?v={{ site.time | date: '%s' }}" defer></script>
+{%- endif -%}
