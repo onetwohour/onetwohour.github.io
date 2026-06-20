@@ -15,6 +15,7 @@ timezone: Asia/Seoul
 supabase:
   url: https://cdpxmvjsgfpfkivyjvtv.supabase.co
   anon_key: sb_publishable_0iXD4flwS1Elbkcb4ynC9w_5Z-PrAwm
+  admin: onetwohour  # 검수 권한 GitHub 로그인명 (RLS와 일치해야 함)
 
 # Jekyll
 permalink: /:title/

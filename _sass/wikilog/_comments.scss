@@ -264,6 +264,12 @@ video.wk-emoticon { display: inline-block; object-fit: contain; }
 .wk-conpack__grid { display: flex; flex-wrap: wrap; gap: 10px; }
 .wk-conpage__empty { color: var(--fg3); font-size: 13.5px; }
 
+// 검수(관리자) — 콘팩별 승인/거절
+.wk-conpage__card--admin { border-color: var(--accent); }
+.wk-conpack__act { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; }
+.wk-conpack__act .wk-btn { padding: 5px 14px; font-size: 12.5px; }
+.wk-conpack__act .wk-cm-textbtn { color: var(--linkred); }
+
 // ===== 스레드 연결선: 부모 아바타 → 답글 아바타 곡선(엘보) =====
 // 아바타 크기 = 연결선 정렬 기준 (최상위 38, 중첩 30) — 깊이 무관 정렬
 .wk-cm-item { --av: 38px; }

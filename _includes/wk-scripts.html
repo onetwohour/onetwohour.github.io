@@ -2,7 +2,7 @@
 <script src="{{ site.url }}/assets/js/wikilog.js?v={{ site.time | date: '%s' }}" defer></script>
 
 {% if site.supabase.url %}
-<script>window.WK_SB={url:{{ site.supabase.url | jsonify }},key:{{ site.supabase.anon_key | jsonify }}};</script>
+<script>window.WK_SB={url:{{ site.supabase.url | jsonify }},key:{{ site.supabase.anon_key | jsonify }},admin:{{ site.supabase.admin | jsonify }}};</script>
 <script src="{{ site.url }}/assets/js/views.js?v={{ site.time | date: '%s' }}" defer></script>
 {% endif %}
 

@@ -12,6 +12,8 @@
   var authEl = root.querySelector('[data-con-auth]');
   var mineWrap = root.querySelector('[data-con-minewrap]');
   var mineEl = root.querySelector('[data-con-mine]');
+  var approveWrap = root.querySelector('[data-con-approvewrap]');
+  var approveEl = root.querySelector('[data-con-approve]');
   var user = null;
   var staged = [];
   var seq = 0;
@@ -78,12 +80,14 @@
       mineWrap.hidden = false;
       renderStage();
       loadMine();
+      setupApprove();
     } else {
       authEl.innerHTML =
         '<div class="wk-conpage__login"><span>로그인</span>' +
         '<button class="wk-cm-oauth wk-cm-oauth--gh" data-con-oauth="github" type="button">GitHub</button>' +
         '<button class="wk-cm-oauth wk-cm-oauth--gg" data-con-oauth="google" type="button">Google</button></div>';
       mineWrap.hidden = true; mineEl.innerHTML = '';
+      if (approveWrap) approveWrap.hidden = true;
     }
   }
 
@@ -160,8 +164,67 @@
     });
   }
 
+  /* ---------- 검수(관리자) ---------- */
+  function isAdmin() {
+    var m = (user && user.user_metadata) || {};
+    return !!(cfg.admin && (m.user_name === cfg.admin || (user && user.email === cfg.admin)));
+  }
+  function setupApprove() {
+    if (!approveWrap) return;
+    if (!isAdmin()) { approveWrap.hidden = true; if (approveEl) approveEl.innerHTML = ''; return; }
+    approveWrap.hidden = false;
+    loadPending();
+  }
+  function pendTileHTML(e) {
+    return '<div class="wk-conup__tile" data-url="' + esc(e.url) + '">' + conMedia(e.url) + '</div>';
+  }
+  function loadPending() {
+    approveEl.innerHTML = '<div class="wk-conpage__empty">불러오는 중…</div>';
+    client.from('emoticons').select('id,url,pack').eq('approved', false).order('pack', { ascending: true }).limit(1000).then(function (res) {
+      if (res && res.error) { approveEl.innerHTML = '<div class="wk-conpage__empty">권한이 없거나 불러오지 못했습니다.</div>'; return; }
+      var data = (res && res.data) || [];
+      if (!data.length) { approveEl.innerHTML = '<div class="wk-conpage__empty">검수 대기 중인 콘이 없습니다.</div>'; return; }
+      var groups = {}, order = [];
+      data.forEach(function (e) { var p = e.pack || '기본'; if (!groups[p]) { groups[p] = []; order.push(p); } groups[p].push(e); });
+      approveEl.innerHTML = order.map(function (p) {
+        var cons = groups[p];
+        var ids = cons.map(function (c) { return c.id; }).join(',');
+        return '<div class="wk-conpack" data-pack-ids="' + esc(ids) + '">' +
+          '<div class="wk-conpack__head">' + esc(p) +
+          '<span class="wk-conpack__count">' + cons.length + '개</span>' +
+          '<span class="wk-conpack__act">' +
+          '<button class="wk-btn wk-btn--primary" data-con-approve type="button">승인</button>' +
+          '<button class="wk-cm-textbtn" data-con-reject type="button">거절</button></span></div>' +
+          '<div class="wk-conpack__grid">' + cons.map(pendTileHTML).join('') + '</div></div>';
+      }).join('');
+    });
+  }
+  function packIds(pack) { return (pack.getAttribute('data-pack-ids') || '').split(',').filter(Boolean); }
+  function approvePack(pack) {
+    var ids = packIds(pack); if (!ids.length) return;
+    pack.querySelectorAll('button').forEach(function (x) { x.disabled = true; });
+    client.from('emoticons').update({ approved: true }).in('id', ids).then(function (res) {
+      if (res && res.error) { pack.querySelectorAll('button').forEach(function (x) { x.disabled = false; }); return; }
+      loadPending();
+    });
+  }
+  function rejectPack(pack) {
+    var ids = packIds(pack); if (!ids.length) return;
+    if (!confirm('이 콘팩을 거절(삭제)할까요?')) return;
+    var paths = [];
+    pack.querySelectorAll('.wk-conup__tile').forEach(function (t) {
+      var m = (t.dataset.url || '').match(/\/emoticons\/(.+)$/); if (m) paths.push(decodeURIComponent(m[1]));
+    });
+    pack.querySelectorAll('button').forEach(function (x) { x.disabled = true; });
+    client.from('emoticons').delete().in('id', ids).then(function (res) {
+      if (res && res.error) { pack.querySelectorAll('button').forEach(function (x) { x.disabled = false; }); return; }
+      if (paths.length) client.storage.from('emoticons').remove(paths);
+      loadPending();
+    });
+  }
+
   root.addEventListener('click', function (e) {
-    var b = e.target.closest('[data-con-oauth],[data-con-logout],[data-con-add],[data-con-stagedel],[data-con-submit],[data-con-del]');
+    var b = e.target.closest('[data-con-oauth],[data-con-logout],[data-con-add],[data-con-stagedel],[data-con-submit],[data-con-del],[data-con-approve],[data-con-reject]');
     if (!b) return;
     if (b.dataset.conOauth) { signIn(b.dataset.conOauth); return; }
     if (b.hasAttribute('data-con-logout')) { client.auth.signOut(); return; }
@@ -169,6 +232,8 @@
     if (b.hasAttribute('data-con-stagedel')) { removeStaged(b.closest('.wk-conup__tile').dataset.sid); return; }
     if (b.hasAttribute('data-con-submit')) { uploadPack(); return; }
     if (b.hasAttribute('data-con-del')) { delCon(b.closest('.wk-conup__tile')); return; }
+    if (b.hasAttribute('data-con-approve')) { approvePack(b.closest('.wk-conpack')); return; }
+    if (b.hasAttribute('data-con-reject')) { rejectPack(b.closest('.wk-conpack')); return; }
   });
   root.addEventListener('change', function (e) {
     var fi = e.target.closest('[data-con-file]'); if (!fi) return;
