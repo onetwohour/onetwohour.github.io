@@ -1,7 +1,6 @@
 // Home (대문) screen
 .wk-home {
-  max-width: 1120px;
-  padding: 22px 22px 52px;
+  padding: 22px var(--wrappad) 52px;
 }
 
 // 대문 마스트헤드 (히어로 박스/CTA 없이 담백하게)
@@ -27,8 +26,8 @@
 
 .wk-home__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
-  gap: 22px;
+  grid-template-columns: minmax(0, 1fr) var(--sidew);
+  gap: var(--colgap);
   align-items: start;
 }
 .wk-home__col { min-width: 0; }
@@ -140,11 +139,11 @@
 }
 .wk-tagcloud__cnt { opacity: .6; }
 
-@media (max-width: 900px) {
+@media (max-width: 980px) {
   .wk-home__grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 760px) {
-  .wk-home { padding: 20px 16px 56px; }
+  .wk-home { padding: 20px var(--wrappad) 56px; }
   .wk-hero { padding: 26px 20px; }
   .wk-hero__title { font-size: 26px; }
   .wk-feature { flex-direction: column; }

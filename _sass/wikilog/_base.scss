@@ -51,7 +51,7 @@ button { font-family: inherit; }
 }
 
 // shared content container
-.wk-wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
+.wk-wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--wrappad); }
 
 // page body grows to push footer down
 .wk-page { flex: 1 0 auto; }

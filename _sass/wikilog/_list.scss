@@ -1,14 +1,12 @@
 // List (글 목록) / project / page / 404 screens
 .wk-list {
-  max-width: 1120px;
-  padding: 22px 22px 52px;
+  padding: 22px var(--wrappad) 52px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 260px;
-  gap: 30px;
+  grid-template-columns: minmax(0, 1fr) var(--sidew);
+  gap: var(--colgap);
   align-items: start;
 }
 .wk-list__main { min-width: 0; }
-.wk-list__main--full { grid-column: 1 / -1; }
 
 .wk-list__top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
 .wk-list__title { margin: 0; font-size: 24px; font-weight: 800; }
@@ -99,24 +97,24 @@
 .wk-series__count { font-size: 11.5px; color: var(--fg3); margin-top: 2px; }
 
 // generic page (about, tag archive)
-.wk-pagedoc { max-width: 840px; padding: 30px 22px 70px; }
-.wk-pagedoc__inner { min-width: 0; }
+.wk-pagedoc { padding: 30px var(--wrappad) 70px; }
+.wk-pagedoc__inner { min-width: 0; max-width: var(--bodyw); }
 .wk-tagindex { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 26px; }
 .wk-tagindex__date { font-size: 12px; color: var(--fg3); margin-left: 6px; }
 
 // 404
-.wk-404 { max-width: 600px; padding: 80px 22px; text-align: center; }
+.wk-404 { max-width: 600px; padding: 80px var(--wrappad); text-align: center; }
 .wk-404__code { font-size: 88px; font-weight: 800; color: var(--accent); font-family: var(--mono-font); line-height: 1; }
 .wk-404__title { margin: 14px 0 8px; font-size: 24px; font-weight: 800; }
 .wk-404__desc { color: var(--fg2); font-size: 14px; margin: 0 0 22px; }
 .wk-404__actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
-@media (max-width: 900px) {
+@media (max-width: 980px) {
   .wk-list { grid-template-columns: 1fr; }
   .wk-list__side { display: none; }
 }
 @media (max-width: 760px) {
-  .wk-list { padding: 20px 16px 56px; }
+  .wk-list { padding: 20px var(--wrappad) 56px; }
   .wk-postcard__thumb { width: 96px; }
   .wk-postcard__body { padding: 12px 12px 12px 0; }
   .wk-postcard__title { font-size: 15px; }

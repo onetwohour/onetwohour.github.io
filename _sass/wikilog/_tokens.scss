@@ -10,6 +10,11 @@
   --serif-font:'Noto Serif KR',serif;
   --mono-font:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
   --maxw:1280px;
+  --wrappad:22px;
+  --sidew:264px;
+  --colgap:32px;
+  // 사이드바 없는 화면의 본문 폭 — 사이드바 있는 화면의 1fr 컬럼과 같은 값이 되도록 컨테이너 기준으로 뺀다
+  --bodyw:calc(100% - var(--sidew) - var(--colgap));
 }
 
 :root[data-theme="dark"] {
@@ -18,4 +23,13 @@
   --link:#6aa6f0; --linkred:#f0736f; --accenttext:#0c1410;
   --codebg:#15171a; --codefg:#c9cdd3; --mark:#5b4f15; --shadow:rgba(0,0,0,.45);
   --tab:#2a2d31;
+}
+
+// 사이드바가 접히는 폭 아래에서는 모든 화면이 본문으로 가득 찬다
+@media (max-width: 980px) {
+  :root { --bodyw:100%; }
+}
+
+@media (max-width: 760px) {
+  :root { --wrappad:16px; }
 }

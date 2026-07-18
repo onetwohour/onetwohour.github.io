@@ -1,8 +1,8 @@
 // Document (post) screen
 .wk-doc {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 264px;
-  gap: 32px;
+  grid-template-columns: minmax(0, 1fr) var(--sidew);
+  gap: var(--colgap);
   align-items: start;
 }
 .wk-doc__main { min-width: 0; padding: 18px 0 44px; }

@@ -209,7 +209,10 @@ video.wk-emoticon { display: inline-block; object-fit: contain; }
 .wk-cm-emoempty { color: var(--fg3); font-size: 12.5px; padding: 24px 4px; width: 100%; text-align: center; }
 
 // ===== 콘 등록·관리 페이지 (/con/) =====
-.wk-conpage { padding: 30px 0 64px; }
+.wk-conpage {
+  padding: 30px var(--wrappad) 64px;
+  > * { max-width: var(--bodyw); }
+}
 .wk-conpage__title { font-size: 22px; font-weight: 800; margin: 0 0 20px; }
 .wk-conpage__login { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 .wk-conpage__me {

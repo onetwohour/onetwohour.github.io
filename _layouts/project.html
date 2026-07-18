@@ -3,7 +3,7 @@ layout: default
 ---
 {%- assign projects = site.posts | where: "project", true -%}
 <main class="wk-list wk-wrap" data-screen="프로젝트">
-  <div class="wk-list__main wk-list__main--full">
+  <div class="wk-list__main">
     <div class="wk-list__top">
       <h1 class="wk-list__title">{{ page.title | default: "프로젝트" }}</h1>
       <span class="wk-list__count">{{ projects | size }}개</span>

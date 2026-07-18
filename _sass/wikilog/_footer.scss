@@ -8,7 +8,7 @@
 .wk-footer__cols {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 30px 22px;
+  padding: 30px var(--wrappad);
   display: flex;
   gap: 30px;
   flex-wrap: wrap;
