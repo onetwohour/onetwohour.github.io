@@ -61,6 +61,31 @@
 
 .wk-popular { margin-bottom: 10px; }
 
+// 조회수를 받아오는 동안의 자리표시자 — 글이 바뀌는 장면을 가린다
+@keyframes wkskel { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+
+.wk-feature.is-loading,
+.wk-popular.is-loading { animation: wkskel 1.3s ease-in-out infinite; }
+
+.wk-feature.is-loading {
+  .wk-feature__thumb { background: var(--bg3); &::before { display: none; } }
+  .wk-feature__cat,
+  .wk-feature__title,
+  .wk-feature__desc,
+  .wk-feature__meta { color: transparent; background: var(--bg3); border-radius: 4px; }
+}
+
+.wk-rank--skel {
+  .wk-rank__title { height: 15px; width: 62%; background: var(--bg3); border-radius: 4px; }
+  .wk-rank__meta { height: 12px; width: 30%; background: var(--bg3); border-radius: 4px; }
+  .wk-rank__num { color: var(--bd2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wk-feature.is-loading,
+  .wk-popular.is-loading { animation: none; }
+}
+
 // ranked latest list
 .wk-ranklist { display: flex; flex-direction: column; }
 .wk-rank {

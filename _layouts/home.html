@@ -39,6 +39,8 @@ layout: default
         <h2 class="wk-home__h">인기 글</h2>
         <div class="wk-ranklist" data-wk-popular-list></div>
       </section>
+      {%- comment -%} defer 없이 여기서 실행해야 대표 문서가 바뀌는 장면이 노출되지 않는다 {%- endcomment -%}
+      {%- if site.supabase.url -%}<script src="{{ site.url }}/assets/js/home.js?v={{ site.time | date: '%s' }}"></script>{%- endif -%}
 
       <div class="wk-home__hrow">
         <h2 class="wk-home__h">최신 글</h2>

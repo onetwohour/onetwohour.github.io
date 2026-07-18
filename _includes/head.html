@@ -17,6 +17,8 @@
   })();
 </script>
 
+{% if site.supabase.url %}<script>window.WK_SB={url:{{ site.supabase.url | jsonify }},key:{{ site.supabase.anon_key | jsonify }},admin:{{ site.supabase.admin | jsonify }}};</script>{% endif %}
+
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
