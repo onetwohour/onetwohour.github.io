@@ -7,11 +7,12 @@
 }
 .wk-doc__main { min-width: 0; padding: 18px 0 44px; }
 
-// 목차가 없으면 사이드 슬롯을 없애되 본문 폭은 다른 화면과 같게 유지한다
+// 목차가 없으면 사이드 슬롯을 없애고 본문을 가운데로 — 폭은 다른 화면과 같게 유지한다
+// 그리드로 두면 auto 마진이 stretch를 풀어 본문이 shrink-to-fit 되므로 block으로 바꾼다
 .wk-doc--notoc {
-  grid-template-columns: minmax(0, 1fr);
+  display: block;
   .wk-doc__side { display: none; }
-  .wk-doc__main { max-width: var(--bodyw); }
+  .wk-doc__main { max-width: var(--bodyw); margin: 0 auto; }
 }
 
 .wk-breadcrumb {

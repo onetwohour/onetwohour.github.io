@@ -5,15 +5,17 @@ permalink: /cons/
 sitemap: false
 ---
 <main class="wk-wrap wk-conpage" data-wk-conpage>
-  <h1 class="wk-conpage__title">콘</h1>
-  <div data-con-auth></div>
-  <div class="wk-conpage__card" data-con-minewrap hidden>
-    <h2>내가 등록한 콘팩</h2>
-    <div class="wk-conpage__mine" data-con-mine></div>
-  </div>
-  <div class="wk-conpage__card wk-conpage__card--admin" data-con-approvewrap hidden>
-    <h2>검수 대기</h2>
-    <div class="wk-conpage__mine" data-con-approve></div>
+  <div class="wk-conpage__inner">
+    <h1 class="wk-conpage__title">콘</h1>
+    <div data-con-auth></div>
+    <div class="wk-conpage__card" data-con-minewrap hidden>
+      <h2>내가 등록한 콘팩</h2>
+      <div class="wk-conpage__mine" data-con-mine></div>
+    </div>
+    <div class="wk-conpage__card wk-conpage__card--admin" data-con-approvewrap hidden>
+      <h2>검수 대기</h2>
+      <div class="wk-conpage__mine" data-con-approve></div>
+    </div>
   </div>
 </main>
 {%- if site.supabase.url -%}

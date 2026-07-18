@@ -2,9 +2,11 @@
 layout: default
 ---
 <main class="wk-searchpage wk-wrap" data-screen="검색">
-  <h1 class="wk-searchpage__title">검색 결과</h1>
-  <p class="wk-searchpage__sub"><b id="wk-q" class="accent"></b><span id="wk-rcwrap" hidden> 에 대한 결과 <b id="wk-rc">0</b>건</span></p>
-  <div id="wk-results" class="wk-results"></div>
-  <div id="wk-search-empty" class="wk-searchpage__empty">검색어를 입력하세요.</div>
+  <div class="wk-searchpage__inner">
+    <h1 class="wk-searchpage__title">검색 결과</h1>
+    <p class="wk-searchpage__sub"><b id="wk-q" class="accent"></b><span id="wk-rcwrap" hidden> 에 대한 결과 <b id="wk-rc">0</b>건</span></p>
+    <div id="wk-results" class="wk-results"></div>
+    <div id="wk-search-empty" class="wk-searchpage__empty">검색어를 입력하세요.</div>
+  </div>
 </main>
 <script src="{{ site.url }}/assets/js/search.js?v={{ site.time | date: '%s' }}" defer></script>

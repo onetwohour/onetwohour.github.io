@@ -8,6 +8,12 @@
 }
 .wk-list__main { min-width: 0; }
 
+// 사이드바를 쓰지 않는 목록 화면 (프로젝트) — 본문을 가운데로
+.wk-list--solo {
+  display: block;
+  .wk-list__main { max-width: var(--bodyw); margin: 0 auto; }
+}
+
 .wk-list__top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
 .wk-list__title { margin: 0; font-size: 24px; font-weight: 800; }
 .wk-list__count { font-size: 13px; color: var(--fg3); }
@@ -98,7 +104,7 @@
 
 // generic page (about, tag archive)
 .wk-pagedoc { padding: 30px var(--wrappad) 70px; }
-.wk-pagedoc__inner { min-width: 0; max-width: var(--bodyw); }
+.wk-pagedoc__inner { min-width: 0; max-width: var(--bodyw); margin: 0 auto; }
 .wk-tagindex { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 26px; }
 .wk-tagindex__date { font-size: 12px; color: var(--fg3); margin-left: 6px; }
 
