@@ -1,0 +1,7 @@
+{%- comment -%} Thumbnail div for include.post with class include.class; falls back to a placeholder when the post has no image. {%- endcomment -%}
+{%- capture _cover -%}{%- include wk-cover.html post=include.post -%}{%- endcapture -%}
+{%- if _cover != '' -%}
+<div class="{{ include.class }}" style="background-image:url('{{ _cover }}');background-size:cover;background-position:center;background-repeat:no-repeat;"></div>
+{%- else -%}
+<div class="{{ include.class }} wk-thumb--empty"></div>
+{%- endif -%}

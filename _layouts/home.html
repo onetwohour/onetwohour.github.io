@@ -24,12 +24,7 @@ layout: default
       {%- if featured -%}
       <h2 class="wk-home__h">대표 문서</h2>
       <a class="wk-feature" data-wk-feature href="{{ featured.url | prepend: site.url }}">
-        {%- capture fcover -%}{%- include wk-cover.html post=featured -%}{%- endcapture -%}
-        {%- if fcover != '' -%}
-        <div class="wk-feature__thumb" style="background-image:url('{{ fcover }}');background-size:cover;background-position:center;background-repeat:no-repeat;"></div>
-        {%- else -%}
-        <div class="wk-feature__thumb"></div>
-        {%- endif -%}
+        {%- include wk-thumb.html post=featured class='wk-feature__thumb' -%}
         <div class="wk-feature__body">
           {%- assign ftag = featured.tag | first -%}
           <div class="wk-feature__cat">{{ ftag }}</div>

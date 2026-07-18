@@ -30,12 +30,7 @@ layout: default
          data-date="{{ p.date | date: '%Y%m%d%H%M' }}"
          data-title="{{ p.title | escape }}"
          data-tags="{{ tagkey }}">
-        {%- capture cover -%}{%- include wk-cover.html post=p -%}{%- endcapture -%}
-        {%- if cover != '' -%}
-        <div class="wk-postcard__thumb" style="background-image:url('{{ cover }}');background-size:cover;background-position:center;background-repeat:no-repeat;"></div>
-        {%- else -%}
-        <div class="wk-postcard__thumb"></div>
-        {%- endif -%}
+        {%- include wk-thumb.html post=p class='wk-postcard__thumb' -%}
         <div class="wk-postcard__body">
           {%- if p.series -%}<div class="wk-postcard__series">{{ p.series }}</div>{%- endif -%}
           <div class="wk-postcard__title">{{ p.title }}</div>

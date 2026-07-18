@@ -109,8 +109,7 @@ layout: default
         {%- for p in related -%}
           {%- unless p.url == page.url -%}{%- if rel_count < 3 -%}
           <a class="wk-related__card" href="{{ p.url | prepend: site.url }}">
-            {%- capture rcover -%}{%- include wk-cover.html post=p -%}{%- endcapture -%}
-            {%- if rcover != '' -%}<div class="wk-related__thumb" style="background-image:url('{{ rcover }}');background-size:cover;background-position:center;background-repeat:no-repeat;"></div>{%- else -%}<div class="wk-related__thumb"></div>{%- endif -%}
+            {%- include wk-thumb.html post=p class='wk-related__thumb' -%}
             <div class="wk-related__body">
               <div class="wk-related__title">{{ p.title }}</div>
               <div class="wk-related__meta">{{ p.date | date: '%Y-%m-%d' }}</div>

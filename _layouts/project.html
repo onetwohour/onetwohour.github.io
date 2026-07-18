@@ -16,12 +16,7 @@ layout: default
     <div class="wk-postcards">
       {%- for p in projects -%}
       <a class="wk-postcard" href="{{ p.url | prepend: site.url }}">
-        {%- capture cover -%}{%- include wk-cover.html post=p -%}{%- endcapture -%}
-        {%- if cover != '' -%}
-        <div class="wk-postcard__thumb" style="background-image:url('{{ cover }}');background-size:cover;background-position:center;background-repeat:no-repeat;"></div>
-        {%- else -%}
-        <div class="wk-postcard__thumb"></div>
-        {%- endif -%}
+        {%- include wk-thumb.html post=p class='wk-postcard__thumb' -%}
         <div class="wk-postcard__body">
           <div class="wk-postcard__title">{{ p.title }}</div>
           <div class="wk-postcard__summary">{{ p.excerpt | strip_html | truncate: 140 }}</div>

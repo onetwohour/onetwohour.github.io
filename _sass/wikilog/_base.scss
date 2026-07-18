@@ -58,4 +58,24 @@ button { font-family: inherit; }
 
 // generic helpers
 .wk-divider { width: 1px; height: 14px; background: var(--bd2); display: inline-block; }
+
+// 이미지 없는 글의 기본 썸네일 — 문서 모양을 그려 빈 칸으로 보이지 않게 한다
+.wk-thumb--empty {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 32px;
+    height: 40px;
+    transform: translate(-50%, -50%);
+    border: 2px solid var(--bd2);
+    border-radius: 3px;
+    background:
+      linear-gradient(var(--bd2), var(--bd2)) no-repeat 7px 9px / 14px 2px,
+      linear-gradient(var(--bd2), var(--bd2)) no-repeat 7px 16px / 14px 2px,
+      linear-gradient(var(--bd2), var(--bd2)) no-repeat 7px 23px / 8px 2px;
+  }
+}
 .wk-spacer { flex: 1; }

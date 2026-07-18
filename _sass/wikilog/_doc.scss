@@ -7,6 +7,13 @@
 }
 .wk-doc__main { min-width: 0; padding: 18px 0 44px; }
 
+// 목차가 없으면 사이드 슬롯을 없애되 본문 폭은 다른 화면과 같게 유지한다
+.wk-doc--notoc {
+  grid-template-columns: minmax(0, 1fr);
+  .wk-doc__side { display: none; }
+  .wk-doc__main { max-width: var(--bodyw); }
+}
+
 .wk-breadcrumb {
   font-size: 12.5px;
   color: var(--fg3);

@@ -56,6 +56,8 @@
     var heads = source.querySelectorAll('h2, h3, h4');
     if (!heads.length) {
       holders.forEach(function (h) { h.style.display = 'none'; });
+      var doc = document.querySelector('.wk-doc');
+      if (doc) doc.classList.add('wk-doc--notoc');
       return;
     }
 
