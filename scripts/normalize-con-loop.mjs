@@ -159,7 +159,9 @@ async function main() {
   console.log(`\n=== ${APPLY ? '반영' : '대상'} ${patched} / 건너뜀 ${skipped} / 실패 ${failed} ===`);
   if (!APPLY && patched) console.log('실제 반영: node scripts/normalize-con-loop.mjs --apply');
   if (APPLY && patched) console.log('CDN 캐시가 남아 있으면 최대 1시간 뒤 반영됩니다.');
-  process.exit(failed ? 1 : 0);
+  // fetch가 남긴 keep-alive 소켓이 있는 상태로 process.exit()을 부르면
+  // Windows에서 libuv assertion으로 죽는다. 종료 코드만 정하고 자연 종료시킨다.
+  process.exitCode = failed ? 1 : 0;
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+main().catch((e) => { console.error(e); process.exitCode = 1; });
