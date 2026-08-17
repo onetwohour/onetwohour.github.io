@@ -1,0 +1,30 @@
+{%- comment -%} Footer columns + back-to-top {%- endcomment -%}
+<footer class="wk-footer">
+  <div class="wk-footer__cols">
+    <div class="wk-footer__brand">
+      <div class="wk-footer__title">{{ site.title }}</div>
+      <p>{{ site.description }}</p>
+    </div>
+    <div class="wk-footer__col">
+      <div class="wk-footer__head">바로가기</div>
+      <a href="{{ site.url }}/">대문</a><br>
+      <a href="{{ site.url }}/posts/">글 목록</a><br>
+      <a href="{{ site.url }}/tags/">분류</a><br>
+      <a href="{{ site.url }}/projects/">프로젝트</a>
+    </div>
+    <div class="wk-footer__col">
+      <div class="wk-footer__head">정보</div>
+      <a href="{{ site.url }}/about/">About</a><br>
+      {% if site.github-url %}<a href="https://github.com/{{ site.github-url }}" target="_blank" rel="noopener noreferrer">GitHub</a>{% endif %}
+    </div>
+    <div class="wk-footer__col">
+      <div class="wk-footer__head">바깥 링크</div>
+      <a href="https://onetwohour.com/" target="_blank" rel="noopener noreferrer">Onetwohour 포트폴리오</a><br>
+      <a href="https://onetdns.onetwohour.com/" target="_blank" rel="noopener noreferrer">Onet DNS</a><br>
+      <a href="https://search.onetwohour.com/" target="_blank" rel="noopener noreferrer">Noogle 검색</a>
+    </div>
+  </div>
+  <div class="wk-footer__bottom">© {{ site.time | date: '%Y' }} {{ site.title }}</div>
+</footer>
+
+<button class="wk-totop" id="wk-totop" type="button" title="맨 위로" aria-label="맨 위로">↑</button>
