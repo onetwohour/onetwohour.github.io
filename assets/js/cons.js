@@ -34,6 +34,68 @@
     return '<span class="wk-cm-av wk-cm-av--ph">' + esc(initial(name)) + '</span>';
   }
 
+  /* ---------- 애니메이션 루프 정규화 ----------
+     webp/gif의 반복 횟수는 파일에 박혀 있고 <img>로는 못 바꾼다(video의 loop 속성과 달리).
+     업로드 직전에 그 필드만 무한(0)으로 덮어쓴다 — 재인코딩이 아니라서 화질·용량 그대로다. */
+  function patchWebpLoop(buf) {
+    var b = new Uint8Array(buf), dv = new DataView(buf);
+    if (b.length < 16) return null;
+    if (b[0] !== 0x52 || b[1] !== 0x49 || b[2] !== 0x46 || b[3] !== 0x46) return null; // RIFF
+    if (b[8] !== 0x57 || b[9] !== 0x45 || b[10] !== 0x42 || b[11] !== 0x50) return null; // WEBP
+    var off = 12;
+    while (off + 8 <= b.length) {
+      var size = dv.getUint32(off + 4, true);
+      if (size > b.length - off - 8) return null; // 청크 길이가 파일을 벗어남 = 손상
+      // ANIM 청크: 배경색(4) + 반복횟수(2, LE)
+      if (b[off] === 0x41 && b[off + 1] === 0x4E && b[off + 2] === 0x49 && b[off + 3] === 0x4D && size >= 6) {
+        if (dv.getUint16(off + 12, true) === 0) return null; // 이미 무한
+        dv.setUint16(off + 12, 0, true);
+        return buf;
+      }
+      off += 8 + size + (size & 1); // 청크는 짝수 바이트로 패딩됨
+    }
+    return null; // 정지 이미지
+  }
+  var GIF_NETSCAPE = [0x21, 0xFF, 0x0B, 0x4E, 0x45, 0x54, 0x53, 0x43, 0x41, 0x50, 0x45, 0x32, 0x2E, 0x30, 0x03, 0x01, 0x00, 0x00, 0x00];
+  function patchGifLoop(buf) {
+    var b = new Uint8Array(buf);
+    if (b.length < 14) return null;
+    if (b[0] !== 0x47 || b[1] !== 0x49 || b[2] !== 0x46) return null; // GIF
+    for (var i = 0; i + 18 < b.length; i++) {
+      if (b[i] !== 0x21 || b[i + 1] !== 0xFF || b[i + 2] !== 0x0B) continue;
+      var hit = true;
+      for (var j = 3; j < 16; j++) { if (b[i + j] !== GIF_NETSCAPE[j]) { hit = false; break; } }
+      if (!hit) continue;
+      if (b[i + 16] === 0 && b[i + 17] === 0) return null; // 이미 무한
+      b[i + 16] = 0; b[i + 17] = 0;
+      return buf;
+    }
+    // NETSCAPE 확장이 아예 없으면 1회만 재생된다 → 헤더+화면기술자(+전역 팔레트) 뒤에 삽입
+    var pos = 13;
+    if (b[10] & 0x80) pos += 3 * (1 << ((b[10] & 7) + 1));
+    if (pos > b.length) return null;
+    var out = new Uint8Array(b.length + GIF_NETSCAPE.length);
+    out.set(b.subarray(0, pos), 0);
+    out.set(GIF_NETSCAPE, pos);
+    out.set(b.subarray(pos), pos + GIF_NETSCAPE.length);
+    return out.buffer;
+  }
+  // 패치 실패·비대상 파일은 원본 그대로 올린다 (업로드 자체를 막지 않음)
+  function normalizeLoop(file, cb) {
+    var name = (file.name || '').toLowerCase(), type = (file.type || '').toLowerCase();
+    var webp = type === 'image/webp' || /\.webp$/.test(name);
+    var gif = type === 'image/gif' || /\.gif$/.test(name);
+    if (!webp && !gif) { cb(file); return; }
+    var fr = new FileReader();
+    fr.onload = function () {
+      var out = null;
+      try { out = webp ? patchWebpLoop(fr.result) : patchGifLoop(fr.result); } catch (e) { out = null; }
+      cb(out ? new Blob([out], { type: file.type || (webp ? 'image/webp' : 'image/gif') }) : file);
+    };
+    fr.onerror = function () { cb(file); };
+    fr.readAsArrayBuffer(file);
+  }
+
   /* ---------- 콘팩 등록 폼 ---------- */
   function uploadCardHTML() {
     return '<div class="wk-conpage__card"><h2>새 콘팩 등록</h2>' +
@@ -141,12 +203,14 @@
       var code = 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
       var ext = (f.name.split('.').pop() || 'png').toLowerCase();
       var path = user.id + '/' + code + '.' + ext;
-      client.storage.from('emoticons').upload(path, f, { upsert: true, contentType: f.type }).then(function (up) {
-        if (up.error) { failed++; step(i + 1); return; }
-        var pub = client.storage.from('emoticons').getPublicUrl(path).data.publicUrl;
-        client.from('emoticons').insert({ user_id: user.id, shortcode: code, url: pub, pack: name, approved: false }).then(function (ins) {
-          if (ins.error) failed++; else done++;
-          step(i + 1);
+      normalizeLoop(f, function (payload) {
+        client.storage.from('emoticons').upload(path, payload, { upsert: true, contentType: f.type }).then(function (up) {
+          if (up.error) { failed++; step(i + 1); return; }
+          var pub = client.storage.from('emoticons').getPublicUrl(path).data.publicUrl;
+          client.from('emoticons').insert({ user_id: user.id, shortcode: code, url: pub, pack: name, approved: false }).then(function (ins) {
+            if (ins.error) failed++; else done++;
+            step(i + 1);
+          });
         });
       });
     }
