@@ -96,6 +96,9 @@
   border-bottom: 1px solid var(--bd);
   text-decoration: none;
   &:last-child { border-bottom: none; }
+  &[hidden] { display: none; }
+  // 숨긴 항목이 끝에 남아도 마지막 줄에 밑줄이 남지 않게
+  &:not(:has(~ .wk-rank:not([hidden]))) { border-bottom: none; }
 }
 .wk-rank__num {
   font-size: 20px; font-weight: 800;

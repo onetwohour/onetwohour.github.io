@@ -46,23 +46,27 @@ layout: default
         <h2 class="wk-home__h">최신 글</h2>
         <a class="wk-home__more" href="{{ site.url }}/posts/">더보기</a>
       </div>
-      <div class="wk-ranklist">
+      {%- comment -%} 대표 문서는 home.js가 조회수 1위로 교체하므로, 목록에서 뺄 글도 스크립트가 다시 고른다 {%- endcomment -%}
+      <div class="wk-ranklist" data-wk-latest-list>
         {%- assign rank = 0 -%}
         {%- for p in blog limit: 6 -%}
-          {%- unless p.url == featured.url -%}
-          {%- assign rank = rank | plus: 1 -%}
-          {%- if rank <= 5 -%}
-          <a class="wk-rank" href="{{ p.url | prepend: site.url }}">
-            <span class="wk-rank__num">{{ rank }}</span>
+          {%- if p.url == featured.url -%}
+            {%- assign shown = false -%}
+          {%- else -%}
+            {%- assign rank = rank | plus: 1 -%}
+            {%- if rank <= 5 -%}{%- assign shown = true -%}{%- else -%}{%- assign shown = false -%}{%- endif -%}
+          {%- endif -%}
+          <a class="wk-rank" data-wk-latest href="{{ p.url | prepend: site.url }}"{% unless shown %} hidden{% endunless %}>
+            <span class="wk-rank__num">{% if shown %}{{ rank }}{% endif %}</span>
             <div class="wk-rank__body">
               <div class="wk-rank__title">{{ p.title }}</div>
               <div class="wk-rank__meta">{% if p.tag and p.tag.first %}{{ p.tag.first }} · {% endif %}{{ p.date | date: '%Y-%m-%d' }}</div>
             </div>
           </a>
-          {%- endif -%}
-          {%- endunless -%}
         {%- endfor -%}
       </div>
+      {%- comment -%} home.js는 이 목록보다 먼저 실행되므로, 그려지기 전에 여기서 한 번 맞춘다 {%- endcomment -%}
+      {%- if site.supabase.url -%}<script>window.WK_HOME_SYNC&&window.WK_HOME_SYNC()</script>{%- endif -%}
     </div>
 
     <aside class="wk-home__side">

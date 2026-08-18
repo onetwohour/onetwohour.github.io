@@ -10,6 +10,8 @@
 
   var KEY = 'wk:home';
   var TTL = 600000;
+  var serverFeatUrl = feat ? feat.getAttribute('href') : '';
+  var featUrl = serverFeatUrl;
   var thumb = feat && feat.querySelector('.wk-feature__thumb');
   var thumbStyle = thumb ? thumb.getAttribute('style') : null;
   var thumbClass = thumb ? thumb.getAttribute('class') : null;
@@ -30,6 +32,27 @@
     try { sessionStorage.setItem(KEY, JSON.stringify({ t: Date.now(), d: d })); } catch (e) {}
   }
 
+  function pathOf(u) {
+    try { return decodeURIComponent(new URL(u, location.href).pathname); } catch (e) { return String(u == null ? '' : u); }
+  }
+
+  /* 대표 문서 슬롯에 걸린 글만 빼고 5칸을 채운다. 목록은 이 스크립트보다 뒤에 파싱되므로 호출 시점에 찾는다 */
+  function syncLatest() {
+    var wrap = document.querySelector('[data-wk-latest-list]');
+    if (!wrap) return;
+    var skip = featUrl ? pathOf(featUrl) : null;
+    var n = 0;
+    [].forEach.call(wrap.querySelectorAll('[data-wk-latest]'), function (el) {
+      var show = n < 5 && pathOf(el.getAttribute('href')) !== skip;
+      if (show) {
+        n += 1;
+        setText(el.querySelector('.wk-rank__num'), String(n));
+      }
+      el.hidden = !show;
+    });
+  }
+  window.WK_HOME_SYNC = syncLatest;
+
   function rankHTML(it, i) {
     return '<a class="wk-rank" href="' + esc(it.url) + '"><span class="wk-rank__num">' + (i + 1) +
       '</span><div class="wk-rank__body"><div class="wk-rank__title">' + esc(it.title) +
@@ -38,6 +61,8 @@
   }
 
   function showSkeleton() {
+    featUrl = null;
+    syncLatest();
     if (feat) {
       feat.classList.add('is-loading');
       if (thumb) thumb.removeAttribute('style');
@@ -56,6 +81,8 @@
 
   /* 조회수를 못 받은 경우 서버가 렌더한 대표 문서를 그대로 되돌린다 */
   function restore() {
+    featUrl = serverFeatUrl;
+    syncLatest();
     if (feat) feat.classList.remove('is-loading');
     if (thumb) {
       thumb.removeAttribute('style');
@@ -77,6 +104,8 @@
       popWrap.hidden = false;
     }
     var fp = items[0];
+    featUrl = fp.url;
+    syncLatest();
     if (feat) {
       feat.setAttribute('href', fp.url);
       setText(feat.querySelector('.wk-feature__cat'), fp.tag);
