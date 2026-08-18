@@ -26,6 +26,26 @@
     });
   }
 
+  /* ---------- Mobile search ---------- */
+  function setupSearch() {
+    var btn = document.getElementById('wk-search-toggle');
+    var header = document.querySelector('.wk-header');
+    var input = document.getElementById('wk-search-input');
+    if (!btn || !header || !input) return;
+    function setOpen(open) {
+      header.classList.toggle('is-searching', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? '검색 닫기' : '검색 열기');
+      if (open) input.focus(); else input.blur();
+    }
+    btn.addEventListener('click', function () {
+      setOpen(!header.classList.contains('is-searching'));
+    });
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.keyCode === 27) setOpen(false);
+    });
+  }
+
   /* ---------- Back to top ---------- */
   function setupTop() {
     var btn = document.getElementById('wk-totop');
@@ -280,6 +300,7 @@
       themeToggle.addEventListener('click', toggleTheme);
     }
     setupMenu();
+    setupSearch();
     setupTop();
     buildTOC();
     setupFootnotes();
