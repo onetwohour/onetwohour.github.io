@@ -1,0 +1,14 @@
+---
+layout: default
+---
+<main class="wk-pagedoc wk-wrap" data-screen="문서">
+  <article class="wk-pagedoc__inner">
+    <header class="wk-doc__head">
+      <h1 class="wk-doc__title">{{ page.title }}</h1>
+      {%- if page.description -%}<div class="wk-doc__sub">{{ page.description }}</div>{%- endif -%}
+    </header>
+    <div class="wk-doc__body" data-wk-toc-source>
+      {{ content }}
+    </div>
+  </article>
+</main>

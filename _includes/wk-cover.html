@@ -1,0 +1,17 @@
+{%- comment -%} Outputs the first content image URL of include.post (normalized), or nothing. {%- endcomment -%}
+{%- assign _p = include.post -%}
+{%- assign _src = '' -%}
+{%- assign _a = _p.content | split: '<img' -%}
+{%- if _a.size > 1 -%}
+  {%- assign _b = _a[1] | split: 'src="' -%}
+  {%- if _b.size > 1 -%}{%- assign _src = _b[1] | split: '"' | first -%}{%- endif -%}
+{%- endif -%}
+{%- if _src != '' -%}
+  {%- unless _src contains '://' -%}
+    {%- assign _src = _src | replace: '../', '' | replace: './', '' -%}
+    {%- assign _f = _src | slice: 0 -%}
+    {%- unless _f == '/' -%}{%- assign _src = _src | prepend: '/' -%}{%- endunless -%}
+    {%- assign _src = _src | prepend: site.url -%}
+  {%- endunless -%}
+{%- endif -%}
+{{- _src -}}

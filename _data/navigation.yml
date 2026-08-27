@@ -1,0 +1,15 @@
+# Header navigation (internal). External links live in the footer.
+- title: 대문
+  url: /
+
+- title: 글 목록
+  url: /posts/
+
+- title: 분류
+  url: /tags/
+
+- title: 프로젝트
+  url: /projects/
+
+- title: About
+  url: /about/

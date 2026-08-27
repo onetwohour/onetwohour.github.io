@@ -1,0 +1,27 @@
+// Rouge syntax highlighting — scoped to document body, theme-aware
+.wk-doc__body .highlight {
+  .c, .cm, .c1, .cs, .cd, .ch, .cp, .cpf { color: var(--fg3); font-style: italic; }
+  .k, .kd, .kn, .kp, .kr, .kt, .kc, .kv { color: #0b69c7; font-weight: 600; }
+  .nb, .bp { color: #0b69c7; }
+  .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sr, .ss, .dl { color: #00865a; }
+  .mi, .mf, .mh, .mo, .mb, .mx, .il, .m { color: #b5651d; }
+  .nf, .fm { color: #6f42c1; }
+  .nc, .nn, .no, .vc, .vg, .vi, .nv { color: #b5651d; }
+  .na, .nd { color: #6f42c1; }
+  .nt { color: #22863a; }
+  .o, .ow, .p, .pi { color: var(--codefg); }
+  .gp, .gh, .gu { color: var(--fg3); }
+  .err { color: var(--linkred); }
+  .gi { color: #22863a; background: #e6ffed; }
+  .gd { color: #b31d28; background: #ffeef0; }
+}
+
+:root[data-theme="dark"] .wk-doc__body .highlight {
+  .k, .kd, .kn, .kp, .kr, .kt, .kc, .kv, .nb, .bp { color: #79b8ff; }
+  .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sr, .ss, .dl { color: #5ad6a0; }
+  .mi, .mf, .mh, .mo, .mb, .mx, .il, .m, .nc, .nn, .no, .vc, .vg, .vi, .nv { color: #f0a868; }
+  .nf, .fm, .na, .nd { color: #b392f0; }
+  .nt { color: #85e89d; }
+  .gi { color: #85e89d; background: #173a26; }
+  .gd { color: #f0736f; background: #3a1d1f; }
+}

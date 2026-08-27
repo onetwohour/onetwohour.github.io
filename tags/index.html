@@ -1,0 +1,30 @@
+---
+layout: page
+title: 분류
+description: 태그별로 모아 보는 글 목록
+comments: false
+---
+
+{%- assign tags = "" | split: "," -%}
+{%- for p in site.posts -%}{%- if p.project != true and p.tag -%}{%- assign tags = tags | concat: p.tag -%}{%- endif -%}{%- endfor -%}
+{%- assign tags = tags | where_exp: "t", "t != empty" -%}
+{%- assign uniq = tags | uniq | sort -%}
+
+<div class="wk-tagindex">
+  {%- for t in uniq -%}
+    {%- assign cnt = 0 -%}
+    {%- for x in tags -%}{%- if x == t -%}{%- assign cnt = cnt | plus: 1 -%}{%- endif -%}{%- endfor -%}
+    <a class="wk-tagcloud__item" href="#{{ t }}">{{ t }} <span class="wk-tagcloud__cnt">{{ cnt }}</span></a>
+  {%- endfor -%}
+</div>
+
+{%- for t in uniq -%}
+<h2 id="{{ t }}">{{ t }}</h2>
+<ul>
+  {%- for p in site.posts -%}
+    {%- if p.tag contains t -%}
+    <li><a href="{{ p.url | prepend: site.url }}">{{ p.title }}</a> <span class="wk-tagindex__date">{{ p.date | date: '%Y-%m-%d' }}</span></li>
+    {%- endif -%}
+  {%- endfor -%}
+</ul>
+{%- endfor -%}
