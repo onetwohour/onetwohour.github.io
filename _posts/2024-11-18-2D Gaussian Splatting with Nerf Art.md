@@ -3,11 +3,9 @@ layout: post
 title: "2D Gaussian Splatting with Nerf Art"
 date: 2024-11-18
 excerpt: "2D Gaussian Splatting 기술과 Nerf Art 기슬을 결합해 보자"
-tag: 
-- 포트폴리오
-- 과제
+tag:
 - 딥러닝
-- 가우시안 스플래팅
+- 그래픽스
 comments: true
 published: true
 project: true

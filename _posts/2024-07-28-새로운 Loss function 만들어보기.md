@@ -3,7 +3,7 @@ layout: post
 title: "새로운 Loss function 만들어보기"
 date: 2024-07-28
 excerpt: "Loss function을 만들어 보자"
-tag: 
+tag:
 - 딥러닝
 comments: true
 published: true

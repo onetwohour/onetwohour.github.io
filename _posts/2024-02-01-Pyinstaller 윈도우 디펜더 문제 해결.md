@@ -3,8 +3,8 @@ layout: post
 title: "Pyinstaller 윈도우 디펜더 문제 해결"
 date: 2024-02-01
 excerpt: "내가 만든 exe파일이 트로이로 감지될 때 해결법"
-tag: 
-- 기타
+tag:
+- 윈도우
 comments: true
 published: true
 ---

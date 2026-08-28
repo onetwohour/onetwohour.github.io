@@ -3,9 +3,7 @@ layout: post
 title: "Undetected"
 date: 2024-01-06
 excerpt: "게임엔진기초수업 과제 : Team perfoce"
-tag: 
-- 포트폴리오
-- 과제
+tag:
 - 게임개발
 comments: true
 published: true

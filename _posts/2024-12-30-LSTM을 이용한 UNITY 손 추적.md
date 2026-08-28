@@ -3,9 +3,7 @@ layout: post
 title: "LSTM을 이용한 UNITY 손 추적"
 date: 2024-12-30
 excerpt: "LSTM을 이용해 손의 움직임을 추적해 보자"
-tag: 
-- 포트폴리오
-- 과제
+tag:
 - 딥러닝
 comments: true
 published: true

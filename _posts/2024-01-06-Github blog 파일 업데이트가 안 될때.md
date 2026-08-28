@@ -3,8 +3,8 @@ layout: post
 title: "Github blog 파일 업데이트가 안 될때"
 date: 2024-01-06
 excerpt: "Github blog에 포스트가 보이지 않을 때 해결방법"
-tag: 
-- 기타
+tag:
+- 개발환경
 comments: true
 published: true
 ---

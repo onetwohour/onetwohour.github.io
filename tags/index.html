@@ -6,7 +6,7 @@ comments: false
 ---
 
 {%- assign tags = "" | split: "," -%}
-{%- for p in site.posts -%}{%- if p.project != true and p.tag -%}{%- assign tags = tags | concat: p.tag -%}{%- endif -%}{%- endfor -%}
+{%- for p in site.posts -%}{%- if p.tag -%}{%- assign tags = tags | concat: p.tag -%}{%- endif -%}{%- endfor -%}
 {%- assign tags = tags | where_exp: "t", "t != empty" -%}
 {%- assign uniq = tags | uniq | sort -%}
 

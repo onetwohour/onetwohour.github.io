@@ -3,8 +3,7 @@ layout: post
 title: "PygameEngine"
 date: 2024-01-06
 excerpt: "게임프로그래밍입문 과제 : Pygame으로 게임엔진 만들기"
-tag: 
-- 과제
+tag:
 - 게임개발
 comments: true
 published: true
